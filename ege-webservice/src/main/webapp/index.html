@@ -18,7 +18,7 @@
 <meta http-equiv="Content-Language" content="en-gb" />
 <meta http-equiv="Content-Script-Type" content="text/javascript" />
 
-<script type="text/javascript">   
+<script type="text/javascript">
 	var homePageUrl = "/";
 	var defaultUrl = "/";
 </script>
@@ -29,10 +29,10 @@
 <script type="text/javascript" src="js/jquery.geturlparam.js"></script>
 <script type="text/javascript" src="js/ui/ui.core.js"></script>
 <script type="text/javascript" src="js/thickbox/thickbox.js"></script>
-<!-- thanks to
-	http://www.webgeekly.com/tutorials/jquery/how-to-make-your-site-multilingual-using-xml-and-jquery/ -->
 
+<!-- thanks to http://www.webgeekly.com/tutorials/jquery/how-to-make-your-site-multilingual-using-xml-and-jquery/ -->
 <script type="text/javascript" language="javascript">
+ var language = $(document).getUrlParam("lang") || "en";
  $(function() {
     $('a.helpLink').each(function()
           { 
@@ -53,10 +53,6 @@
 </script>
 </head>
 <body>
-<script type="text/javascript" language="javascript">
-    var language = $(document).getUrlParam("lang");
-    if (language == null) { language='en'; }
-</script>
 <div id="banner" style="background-color:#2277BB;">
                   <img src="images/banner.jpg"
                     alt="Text Encoding Initiative logo and banner"/>
