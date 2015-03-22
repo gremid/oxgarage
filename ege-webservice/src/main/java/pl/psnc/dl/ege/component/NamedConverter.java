@@ -21,13 +21,13 @@ public class NamedConverter implements Converter {
 
 	/**
 	 * Default constructor.
-	 * 
-	 * @param converter
-	 *            reference to a {@link Converter} interface implementation
-	 * @param converterName
-	 *            name of a converter.
-	 */
-	public NamedConverter(Converter converter, String converterName) throws IllegalArgumentException {
+	 *
+     * @param converterName
+     *            name of a converter.
+     * @param converter
+*            reference to a {@link pl.psnc.dl.ege.component.Converter} interface implementation
+     */
+	public NamedConverter(String converterName, Converter converter) throws IllegalArgumentException {
 		if(converter == null){
 			throw new IllegalArgumentException();
 		}

@@ -71,7 +71,6 @@
   </developers>
   <modules>
     <module>jodconverter</module>
-    <module>jpf-tools</module>
     <module>ege-webservice</module>
   </modules>
   <build>

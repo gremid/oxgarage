@@ -78,7 +78,15 @@ public class MultiXslConverter implements ConfigurableConverter {
 	 */
 	private List<ConversionActionArguments> possibleConversions = new ArrayList<ConversionActionArguments>();
 
-	public void convert(InputStream inputStream, OutputStream outputStream,
+    public MultiXslConverter() {
+    }
+
+    public MultiXslConverter(URI xslUri, ConversionActionArguments conversion) {
+        this.xslUri = xslUri;
+        this.possibleConversions.add(conversion);
+    }
+
+    public void convert(InputStream inputStream, OutputStream outputStream,
 			ConversionActionArguments conversionDataTypes)
 			throws ConverterException, IOException {
 		if (!isSupported(conversionDataTypes)) {
