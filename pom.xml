@@ -70,6 +70,8 @@
     </developer>
   </developers>
   <modules>
+    <module>jodconverter</module>
+    <module>jpf-tools</module>
     <module>ege-api</module>
     <module>tei-javalib</module>
     <module>tei-converter</module>

@@ -166,9 +166,9 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>jpf-tools</groupId>
+      <groupId>net.sf.jpf</groupId>
       <artifactId>jpf-tools</artifactId>
-      <version>1.5.1</version>
+      <version>1.5</version>
     </dependency>
     <dependency>
       <groupId>net.sf.jpf</groupId>
