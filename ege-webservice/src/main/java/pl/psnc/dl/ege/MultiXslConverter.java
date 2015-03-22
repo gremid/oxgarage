@@ -2,12 +2,9 @@ package pl.psnc.dl.ege;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.SequenceInputStream;
-import java.io.ByteArrayInputStream;
 import java.io.OutputStream;
 import java.net.URI;
 import java.net.URL;
@@ -34,7 +31,6 @@ import org.xml.sax.SAXNotRecognizedException;
 import org.xml.sax.SAXNotSupportedException;
 
 import pl.psnc.dl.ege.utils.EGEIOUtils;
-import pl.psnc.dl.ege.MultiXslOutputResolver;
 import pl.psnc.dl.ege.component.ConfigurableConverter;
 import pl.psnc.dl.ege.configuration.EGEConfigurationManager;
 import pl.psnc.dl.ege.configuration.EGEConstants;

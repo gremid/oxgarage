@@ -170,16 +170,75 @@
       <version>0.2.1</version>
       <scope>compile</scope>
     </dependency>
-    <dependency>
-      <groupId>pl.psnc.dl.ege</groupId>
-      <artifactId>ege-framework</artifactId>
-      <version>0.3</version>
-      <scope>compile</scope>
-    </dependency>
+      <dependency>
+          <groupId>log4j</groupId>
+          <artifactId>log4j</artifactId>
+          <version>1.2.12</version>
+          <scope>compile</scope>
+      </dependency>
       <dependency>
           <groupId>commons-io</groupId>
           <artifactId>commons-io</artifactId>
           <version>2.4</version>
+      </dependency>
+      <dependency>
+          <groupId>commons-logging</groupId>
+          <artifactId>commons-logging</artifactId>
+          <version>1.1</version>
+          <scope>compile</scope>
+      </dependency>
+      <dependency>
+          <groupId>net.sf.jpf</groupId>
+          <artifactId>jpf</artifactId>
+          <version>1.5</version>
+          <scope>compile</scope>
+      </dependency>
+      <dependency>
+          <groupId>net.sf.jpf</groupId>
+          <artifactId>jpf-tools</artifactId>
+          <version>1.5</version>
+      </dependency>
+      <dependency>
+          <groupId>net.sf.jpf</groupId>
+          <artifactId>jpf-boot</artifactId>
+          <version>1.5</version>
+          <scope>compile</scope>
+      </dependency>
+      <dependency>
+          <groupId>net.sf.jung</groupId>
+          <artifactId>jung-algorithms</artifactId>
+          <version>2.0.1</version>
+          <scope>compile</scope>
+      </dependency>
+      <dependency>
+          <groupId>net.sf.jung</groupId>
+          <artifactId>jung-visualization</artifactId>
+          <version>2.0.1</version>
+          <scope>compile</scope>
+      </dependency>
+      <dependency>
+          <groupId>net.sf.jung</groupId>
+          <artifactId>jung-api</artifactId>
+          <version>2.0.1</version>
+          <scope>compile</scope>
+      </dependency>
+      <dependency>
+          <groupId>net.sf.jung</groupId>
+          <artifactId>jung-graph-impl</artifactId>
+          <version>2.0.1</version>
+          <scope>compile</scope>
+      </dependency>
+      <dependency>
+          <groupId>net.sf.jung</groupId>
+          <artifactId>jung-io</artifactId>
+          <version>2.0.1</version>
+          <scope>compile</scope>
+      </dependency>
+      <dependency>
+          <groupId>net.sf.jung</groupId>
+          <artifactId>jung-samples</artifactId>
+          <version>2.0.1</version>
+          <scope>compile</scope>
       </dependency>
       <dependency>
           <groupId>org.json</groupId>
