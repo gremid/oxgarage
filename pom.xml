@@ -78,7 +78,6 @@
     <module>oo-converter</module>
     <module>ege-validator</module>
     <module>ege-webservice</module>
-    <module>ege-webclient</module>
     <module>ege-framework</module>
   </modules>
   <build>
