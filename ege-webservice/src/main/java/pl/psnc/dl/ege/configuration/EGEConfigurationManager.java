@@ -52,25 +52,25 @@ public class EGEConfigurationManager {
 	 */
 	public List<Converter> getAvailableConverters()
 	{
-        final DataType teiP5DataType = new DataType("TEI", "text/xml", "TEI P5 XML Document", "text");
-        final DataType teiP4DataType = new DataType("P4", "text/xml", "TEI P4 XML Document", "text");
-        final DataType teiSimpleDataType = new DataType("Simple", "text/xml", "TEI Simple XML Document", "text");
-        final DataType teiTiteDataType = new DataType("Tite", "text/xml", "TEI Tite XML Document", "text");
+        final DataType teiP5DataType = new DataType("TEI", "text/xml", "TEI P5 XML Document", EGEConstants.TEXTFAMILY);
+        final DataType teiP4DataType = new DataType("P4", "text/xml", "TEI P4 XML Document", EGEConstants.TEXTFAMILY);
+        final DataType teiSimpleDataType = new DataType("Simple", "text/xml", "TEI Simple XML Document", EGEConstants.TEXTFAMILY);
+        final DataType teiTiteDataType = new DataType("Tite", "text/xml", "TEI Tite XML Document", EGEConstants.TEXTFAMILY);
 
-        final DataType oddDataType = new DataType("ODD", "text/xml", "ODD Document", "text");
-        final DataType oddcDataType = new DataType("ODDC", "text/xml", "Compiled TEI ODD", "text");
-        final DataType schematronDataType = new DataType("sch", "text/xml", "Schematron constraints", "text");
-        final DataType isoSchematronDataType = new DataType("isosch", "text/xml", "ISO Schematron constraints", "text");
+        final DataType oddDataType = new DataType("ODD", "text/xml", "ODD Document", EGEConstants.TEXTFAMILY);
+        final DataType oddcDataType = new DataType("ODDC", "text/xml", "Compiled TEI ODD", EGEConstants.TEXTFAMILY);
+        final DataType schematronDataType = new DataType("sch", "text/xml", "Schematron constraints", EGEConstants.TEXTFAMILY);
+        final DataType isoSchematronDataType = new DataType("isosch", "text/xml", "ISO Schematron constraints", EGEConstants.TEXTFAMILY);
 
-        final DataType markdownDataType = new DataType("markdown", "text/plain", "Markdown tagging", "text");
-        final DataType docbookDataType = new DataType("DBK", "text/xml", "DocBook Document", "text");
-        final DataType verbatimXmlDataType = new DataType("verbatimxml", "text/xml", "VerbatimXML tagging", "text");
-        final DataType nlmDataType = new DataType("NLM", "text/xml", "National Library of Medicine (NLM) DTD 3.0", "text");
-        final DataType tcpDataType = new DataType("TCP", "text/xml", "TCP XML Document", "text");
-        final DataType cocoaDataType = new DataType("cocoa", "text/plain", "Cocoa tagging", "text");
+        final DataType markdownDataType = new DataType("markdown", "text/plain", "Markdown tagging", EGEConstants.TEXTFAMILY);
+        final DataType docbookDataType = new DataType("DBK", "text/xml", "DocBook Document", EGEConstants.TEXTFAMILY);
+        final DataType verbatimXmlDataType = new DataType("verbatimxml", "text/xml", "VerbatimXML tagging", EGEConstants.TEXTFAMILY);
+        final DataType nlmDataType = new DataType("NLM", "text/xml", "National Library of Medicine (NLM) DTD 3.0", EGEConstants.TEXTFAMILY);
+        final DataType tcpDataType = new DataType("TCP", "text/xml", "TCP XML Document", EGEConstants.TEXTFAMILY);
+        final DataType cocoaDataType = new DataType("cocoa", "text/plain", "Cocoa tagging", EGEConstants.TEXTFAMILY);
 
-        final DataType csvDataType = new DataType("csv", "text/csv", "Comma-Separated Values (.csv)", "spreadsheet");
-        final DataType wordpressFeedDataType = new DataType("wordpress", "text/xml", "Wordpress RSS feed  of blog", "text");
+        final DataType csvDataType = new DataType("csv", "text/csv", "Comma-Separated Values (.csv)", EGEConstants.SPREADSHEETFAMILY);
+        final DataType wordpressFeedDataType = new DataType("wordpress", "text/xml", "Wordpress RSS feed  of blog", EGEConstants.TEXTFAMILY);
 
         return Arrays.<Converter>asList(
                 new NamedConverter("TEI Converter", new TEIConverter()),
