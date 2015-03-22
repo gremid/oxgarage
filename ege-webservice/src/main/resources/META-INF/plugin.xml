@@ -163,4 +163,9 @@
         <parameter id="visibility" value="true" />
         <parameter id="cost" value="11" />
     </extension>
+
+    <extension plugin-id="pl.psnc.dl.ege.root" point-id="Converter" id="OOConverter">
+        <parameter id="class" value="uk.ac.ox.oucs.oxgarage.oo.OOConverter"/>
+        <parameter id="name" value="OpenOffice Converter"/>
+    </extension>
 </plugin>
