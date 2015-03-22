@@ -143,12 +143,6 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>org.tei</groupId>
-      <artifactId>tei-javalib</artifactId>
-      <version>0.5</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
 	<groupId>com.thaiopensource</groupId>
 	<artifactId>trang</artifactId>
 	<version>20091111</version>
