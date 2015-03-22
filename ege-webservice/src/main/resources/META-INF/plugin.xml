@@ -9,4 +9,158 @@
 		<parameter id="name" value="EGE Validator" />
 		<parameter id="description" value="EGE default validator" />
 	</extension>
+    <extension plugin-id="pl.psnc.dl.ege.root" point-id="XslConverter" id="TEItoDocbookConverter">
+        <parameter id="class" value="pl.psnc.dl.ege.MultiXslConverter"/>
+        <parameter id="name" value="TEI to Docbook"/>
+        <parameter id="xsluri" value="docbook/teitodocbook.xsl" />
+        <parameter id="iMimeType" value="text/xml" />
+        <parameter id="iFormat" value="TEI" />
+        <parameter id="oDescription" value="DocBook Document" />
+        <parameter id="iType" value="text" />
+        <parameter id="oMimeType" value="text/xml" />
+        <parameter id="oFormat" value="DBK" />
+        <parameter id="iDescription" value="TEI P5 XML Document" />
+        <parameter id="oType" value="text" />
+        <parameter id="visibility" value="true" />
+        <parameter id="cost" value="10" />
+    </extension>
+    <extension plugin-id="pl.psnc.dl.ege.root" point-id="XslConverter" id="DocbookToTEIConverter">
+        <parameter id="class" value="pl.psnc.dl.ege.MultiXslConverter"/>
+        <parameter id="name" value="Docbook to TEI"/>
+        <parameter id="xsluri" value="docbook/docbooktotei.xsl" />
+        <parameter id="iMimeType" value="text/xml" />
+        <parameter id="iFormat" value="DBK" />
+        <parameter id="iDescription" value="DocBook Document" />
+        <parameter id="iType" value="text" />
+        <parameter id="oMimeType" value="text/xml" />
+        <parameter id="oFormat" value="TEI" />
+        <parameter id="oDescription" value="TEI P5 XML Document" />
+        <parameter id="oType" value="text" />
+        <parameter id="visibility" value="true" />
+        <parameter id="cost" value="10" />
+    </extension>
+    <extension plugin-id="pl.psnc.dl.ege.root" point-id="XslConverter" id="P4ToP5Converter">
+        <parameter id="class" value="pl.psnc.dl.ege.MultiXslConverter"/>
+        <parameter id="name" value="P4 to P5"/>
+        <parameter id="xsluri" value="profiles/default/p4/from.xsl" />
+        <parameter id="iMimeType" value="text/xml" />
+        <parameter id="iFormat" value="P4" />
+        <parameter id="iDescription" value="TEI P4 XML Document" />
+        <parameter id="iType" value="text" />
+        <parameter id="oMimeType" value="text/xml" />
+        <parameter id="oFormat" value="TEI" />
+        <parameter id="oDescription" value="TEI P5 XML Document" />
+        <parameter id="oType" value="text" />
+        <parameter id="visibility" value="true" />
+        <parameter id="cost" value="10" />
+    </extension>
+    <extension plugin-id="pl.psnc.dl.ege.root" point-id="XslConverter" id="TCPToP5Converter">
+        <parameter id="class" value="pl.psnc.dl.ege.MultiXslConverter"/>
+        <parameter id="name" value="TCP to P5"/>
+        <parameter id="xsluri" value="tcp/tcp2tei.xsl" />
+        <parameter id="iMimeType" value="text/xml" />
+        <parameter id="iFormat" value="TCP" />
+        <parameter id="iDescription" value="TCP XML Document" />
+        <parameter id="iType" value="text" />
+        <parameter id="oMimeType" value="text/xml" />
+        <parameter id="oFormat" value="TEI" />
+        <parameter id="oDescription" value="TEI P5 XML Document" />
+        <parameter id="oType" value="text" />
+        <parameter id="visibility" value="true" />
+        <parameter id="cost" value="10" />
+    </extension>
+    <extension plugin-id="pl.psnc.dl.ege.root" point-id="XslConverter" id="ODDToCompiledODD">
+        <parameter id="class" value="pl.psnc.dl.ege.MultiXslConverter"/>
+        <parameter id="name" value="ODD to Compiled ODD"/>
+        <parameter id="xsluri" value="odds/odd2odd.xsl" />
+        <parameter id="iMimeType" value="text/xml" />
+        <parameter id="iFormat" value="ODD" />
+        <parameter id="iDescription" value="ODD Document" />
+        <parameter id="iType" value="text" />
+        <parameter id="oMimeType" value="text/xml"/>
+        <parameter id="oFormat" value="ODDC" />
+        <parameter id="oDescription" value="Compiled ODD Document" />
+        <parameter id="oType" value="text" />
+        <parameter id="visibility" value="true" />
+        <parameter id="cost" value="10" />
+    </extension>
+
+    <extension plugin-id="pl.psnc.dl.ege.root" point-id="XslConverter" id="ODDCtoISOSCHconverter">
+        <parameter id="class" value="pl.psnc.dl.ege.MultiXslConverter"/>
+        <parameter id="name" value="ODDC to ISO Schematron"/>
+        <parameter id="xsluri" value="odds/extract-isosch.xsl" />
+        <parameter id="iMimeType" value="text/xml" />
+        <parameter id="iFormat" value="ODDC" />
+        <parameter id="iDescription" value="Compiled TEI ODD" />
+        <parameter id="iType" value="text" />
+        <parameter id="oMimeType" value="text/xml" />
+        <parameter id="oFormat" value="isosch" />
+        <parameter id="oDescription" value="ISO Schematron constraints" />
+        <parameter id="oType" value="text" />
+        <parameter id="visibility" value="true" />
+        <parameter id="cost" value="11" />
+    </extension>
+
+    <extension plugin-id="pl.psnc.dl.ege.root" point-id="XslConverter" id="ODDCtoSCHconverter">
+        <parameter id="class" value="pl.psnc.dl.ege.MultiXslConverter"/>
+        <parameter id="name" value="ODDC to Schematron"/>
+        <parameter id="xsluri" value="odds/extract-sch.xsl" />
+        <parameter id="iMimeType" value="text/xml" />
+        <parameter id="iFormat" value="ODDC" />
+        <parameter id="iDescription" value="Compiled TEI ODD" />
+        <parameter id="iType" value="text" />
+        <parameter id="oMimeType" value="text/xml" />
+        <parameter id="oFormat" value="sch" />
+        <parameter id="oDescription" value="Schematron constraints" />
+        <parameter id="oType" value="text" />
+        <parameter id="visibility" value="true" />
+        <parameter id="cost" value="11" />
+    </extension>
+
+    <extension plugin-id="pl.psnc.dl.ege.root" point-id="XslConverter" id="TEItoNLMconverter">
+        <parameter id="class" value="pl.psnc.dl.ege.MultiXslConverter"/>
+        <parameter id="name" value="TEI to NLM"/>
+        <parameter id="xsluri" value="nlm/tei_to_nlm.xsl" />
+        <parameter id="iMimeType" value="text/xml" />
+        <parameter id="iFormat" value="TEI" />
+        <parameter id="iDescription" value="TEI P5 XML Document" />
+        <parameter id="iType" value="text" />
+        <parameter id="oMimeType" value="text/xml" />
+        <parameter id="oFormat" value="NLM" />
+        <parameter id="oDescription" value="National Library of Medicine (NLM) DTD 3.0" />
+        <parameter id="oType" value="text" />
+        <parameter id="visibility" value="true" />
+        <parameter id="cost" value="11" />
+    </extension>
+    <extension plugin-id="pl.psnc.dl.ege.root" point-id="XslConverter" id="TitetoTEIconverter">
+        <parameter id="class" value="pl.psnc.dl.ege.MultiXslConverter"/>
+        <parameter id="name" value="Tite to TEI"/>
+        <parameter id="xsluri" value="tite/tite-to-tei.xsl" />
+        <parameter id="iMimeType" value="text/xml" />
+        <parameter id="iFormat" value="Tite" />
+        <parameter id="iDescription" value="TEI Tite XML Document" />
+        <parameter id="iType" value="text" />
+        <parameter id="oMimeType" value="text/xml" />
+        <parameter id="oFormat" value="TEI" />
+        <parameter id="oDescription" value="TEI P5 XML Document" />
+        <parameter id="oType" value="text" />
+        <parameter id="visibility" value="true" />
+        <parameter id="cost" value="11" />
+    </extension>
+
+    <extension plugin-id="pl.psnc.dl.ege.root" point-id="XslConverter" id="TEItoSimpleconverter">
+        <parameter id="class" value="pl.psnc.dl.ege.MultiXslConverter"/>
+        <parameter id="name" value="TEI to Simple"/>
+        <parameter id="xsluri" value="simple/teitosimple.xsl" />
+        <parameter id="iMimeType" value="text/xml" />
+        <parameter id="iFormat" value="TEI" />
+        <parameter id="iDescription" value="TEI P5 XML Document" />
+        <parameter id="iType" value="text" />
+        <parameter id="oMimeType" value="text/xml" />
+        <parameter id="oFormat" value="Simple" />
+        <parameter id="oDescription" value="TEI Simple XML Document" />
+        <parameter id="oType" value="text" />
+        <parameter id="visibility" value="true" />
+        <parameter id="cost" value="11" />
+    </extension>
 </plugin>
