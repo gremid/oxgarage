@@ -7,9 +7,10 @@ import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
-import pl.psnc.dl.ege.configuration.EGEConstants;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import org.apache.log4j.Logger;
+import pl.psnc.dl.ege.configuration.EGEConstants;
 
 /**
  * Singleton class which provides EGE web application
@@ -24,7 +25,7 @@ public final class LabelProvider
 	
 	private static final String REGEXP_LABEL_CONT = "labels_[a-z][a-z].xml";
 	
-	private static final Logger LOGGER = Logger.getLogger(LabelProvider.class);
+	private static final Logger LOGGER = Logger.getLogger(LabelProvider.class.getName());
 	
 	private Map<String,Properties> labels; 
 	
@@ -51,7 +52,7 @@ public final class LabelProvider
 				labels.put(loc, props);
 			}
 			catch(Exception ex){
-				LOGGER.error(ex.getMessage(), ex);
+                LOGGER.log(Level.SEVERE, ex, ex::getMessage);
 			}
 		}
 	}

@@ -10,9 +10,10 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.commons.io.FileCleaningTracker;
-import org.apache.log4j.Logger;
 
 import pl.psnc.dl.ege.EGEImpl;
 
@@ -40,7 +41,7 @@ import pl.psnc.dl.ege.EGEImpl;
 public class DataBuffer
 {
 
-	private static final Logger LOGGER = Logger.getLogger(DataBuffer.class);
+	private static final Logger LOGGER = Logger.getLogger(DataBuffer.class.getName());
 
 	/**
 	 * Default value : max size of item (in number of bytes), that allows to keep it in memory.
@@ -292,14 +293,14 @@ public class DataBuffer
 				}
 			}
 			catch (IOException ex) {
-				LOGGER.error(ex.getMessage());
+                LOGGER.log(Level.SEVERE, ex, ex::getMessage);
 			}
 			finally {
 				try {
 					os.close();
 				}
 				catch (IOException ex) {
-					LOGGER.error(ex.getMessage());
+                    LOGGER.log(Level.SEVERE, ex, ex::getMessage);
 				}
 			}
 		}
@@ -325,7 +326,7 @@ public class DataBuffer
 		{
 			if (!os.isInMemory()) {
 				if (os.getFile().exists()) {
-					LOGGER.debug("Removing tmp file : " + os.getFile());
+					LOGGER.fine("Removing tmp file : " + os.getFile());
 					os.getFile().delete();
 				}
 			}

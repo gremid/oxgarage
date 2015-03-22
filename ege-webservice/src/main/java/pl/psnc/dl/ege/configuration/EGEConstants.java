@@ -3,7 +3,7 @@ package pl.psnc.dl.ege.configuration;
 import java.io.File;
 import java.util.Properties;
 import java.io.FileInputStream;
-import org.apache.log4j.Logger;
+import java.util.logging.Logger;
 
 /*
  * Additional useful static data.
@@ -23,7 +23,7 @@ public final class  EGEConstants {
 		oxgProps.load(new FileInputStream("/etc/oxgarage.properties"));
 	    }
 	    catch (java.io.IOException e) {
-			LOGGER.error("Could not read file /etc/oxgarage.properties");
+			LOGGER.severe("Could not read file /etc/oxgarage.properties");
 		}
 	}
 
@@ -62,13 +62,13 @@ public final class  EGEConstants {
 	static {
 	    boolean success = (new File(BUFFER_TEMP_PATH)).mkdirs();
 	    if (!success) {
-			LOGGER.error("Could not create dir " + BUFFER_TEMP_PATH);
+			LOGGER.severe("Could not create dir " + BUFFER_TEMP_PATH);
 	    }
 	}
 	static {
 	    boolean success = (new File(EGE_EXT_DIRECTORY)).mkdirs();
 	    if (!success) {
-			LOGGER.error("Could not create dir " + EGE_EXT_DIRECTORY);
+			LOGGER.severe("Could not create dir " + EGE_EXT_DIRECTORY);
 	    }
 	}
 		

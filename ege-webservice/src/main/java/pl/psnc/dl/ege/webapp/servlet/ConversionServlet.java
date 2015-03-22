@@ -14,6 +14,8 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 
@@ -27,7 +29,6 @@ import org.apache.commons.fileupload.FileItemIterator;
 import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.log4j.Logger;
 
 import pl.psnc.dl.ege.EGE;
 import pl.psnc.dl.ege.EGEImpl;
@@ -81,7 +82,7 @@ public class ConversionServlet extends HttpServlet {
 
 	private static final String APPLICATION_OCTET_STREAM = "application/octet-stream";
 
-	private static final Logger LOGGER = Logger			.getLogger(ConversionServlet.class);
+	private static final Logger LOGGER = Logger.getLogger(ConversionServlet.class.getName());
 
 	private static final long serialVersionUID = 1L;
 
@@ -347,7 +348,7 @@ public class ConversionServlet extends HttpServlet {
 					return;
 				    }
 				} catch (ValidatorException vex) {
-				    LOGGER.debug(vex.getMessage());
+                    LOGGER.log(Level.SEVERE, vex, vex::getMessage);
 				} finally {
 				    try {
 					ins.close();

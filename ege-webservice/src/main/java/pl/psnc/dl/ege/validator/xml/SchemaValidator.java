@@ -3,6 +3,7 @@ package pl.psnc.dl.ege.validator.xml;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.logging.Logger;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -11,7 +12,6 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
-import org.apache.log4j.Logger;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -29,7 +29,7 @@ import pl.psnc.dl.ege.validator.StandardErrorHandler;
 public class SchemaValidator implements XmlValidator
 {
 	
-	private static final Logger LOGGER = Logger.getLogger(SchemaValidator.class);
+	private static final Logger LOGGER = Logger.getLogger(SchemaValidator.class.getName());
 	
 	private final String schemeUrl;
 	
@@ -86,7 +86,7 @@ public class SchemaValidator implements XmlValidator
 					throw ex;
 				}
 			}
-			LOGGER.debug("Uses schema url : " + schemaURL);
+			LOGGER.fine("Uses schema url : " + schemaURL);
 			StreamSource sss = new StreamSource(urlStream);
 			Schema schema =  schemaFactory.newSchema(sss);
 			spf.setSchema(schema);

@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.io.Writer;
+import java.util.logging.Logger;
 
 import javax.xml.transform.stream.StreamSource;
 
@@ -26,8 +27,6 @@ import org.tei.utils.SaxonProcFactory;
 
 import org.tei.exceptions.ConfigurationException;
 
-import org.apache.log4j.Logger;
-
 /**
  * <p>
  * Class specifying the .docx document transformation operations.
@@ -40,7 +39,7 @@ import org.apache.log4j.Logger;
 
 public class DocXConverter extends ComplexConverter {
 
-	private static final Logger LOGGER = Logger.getLogger(DocXConverter.class);
+	private static final Logger LOGGER = Logger.getLogger(DocXConverter.class.getName());
 
 	/**
 	 * Constructs converter for conversion from TEI

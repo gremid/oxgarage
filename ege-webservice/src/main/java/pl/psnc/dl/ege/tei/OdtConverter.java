@@ -14,9 +14,6 @@ import net.sf.saxon.s9api.XsltTransformer;
 
 import org.tei.exceptions.ConfigurationException;
 
-import org.apache.log4j.Logger;
-
-
 /**
  * <p>
  * Class specifying the .odt document transformation operations.
@@ -28,8 +25,6 @@ import org.apache.log4j.Logger;
  */
 
 public class OdtConverter extends ComplexConverter {
-
-	private static final Logger LOGGER = Logger.getLogger(OdtConverter.class);
 
 	/**
 	 * Constructs converter for conversion from TEI

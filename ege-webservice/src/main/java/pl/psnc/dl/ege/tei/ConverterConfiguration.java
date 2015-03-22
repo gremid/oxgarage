@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
-import org.apache.log4j.Logger;
+import java.util.logging.Logger;
 
 import pl.psnc.dl.ege.types.ConversionActionArguments;
 import pl.psnc.dl.ege.types.DataType;
@@ -13,7 +13,7 @@ import pl.psnc.dl.ege.configuration.EGEConstants;
 final class ConverterConfiguration
 {
 
-	private static final Logger LOGGER = Logger.getLogger(TEIConverter.class);
+	private static final Logger LOGGER = Logger.getLogger(TEIConverter.class.getName());
 
 	public static final String PROFILE_NOT_FOUND_MSG = "Profile not found, setting default profile...";
 
@@ -105,7 +105,7 @@ final class ConverterConfiguration
 				else
 				    {
 					CONVERSIONS.add(caa);					
-					LOGGER.debug("registered type " + format.getMimeType());
+					LOGGER.fine(() -> "registered type " + format.getMimeType());
 				    }
 				if (format.equals(Format.XHTML) || format.equals(Format.DOCX) || format.equals(Format.ODT)) {
 					ConversionActionArguments caa2 = new ConversionActionArguments(
@@ -114,7 +114,7 @@ final class ConverterConfiguration
 							new DataType(format.getFormatName(), XML_MIME, 
 								format.getInputDescription(), EGEConstants.TEXTFAMILY), 
 							sbParams.toString(), format.getVisible(), format.getCost());
-					LOGGER.debug("registered alt type " + format.getMimeType());
+                    LOGGER.fine(() -> "registered alt type " + format.getMimeType());
 					CONVERSIONS.add(caa2);
 				}
 				else if (format.equals(Format.XLSX) ) {
@@ -124,7 +124,7 @@ final class ConverterConfiguration
 							new DataType(format.getFormatName(), XML_MIME, 
 								format.getInputDescription(), EGEConstants.SPREADSHEETFAMILY), 
 							sbParams.toString(), format.getVisible(), format.getCost());
-					LOGGER.debug("registered alt type " + format.getMimeType());
+                    LOGGER.fine(() -> "registered alt type " + format.getMimeType());
 					CONVERSIONS.add(caa2);
 				}
 			}

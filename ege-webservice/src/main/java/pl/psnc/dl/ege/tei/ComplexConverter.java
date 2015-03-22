@@ -35,8 +35,6 @@ import org.tei.utils.XMLUtils;
 import pl.psnc.dl.ege.utils.EGEIOUtils;
 import pl.psnc.dl.ege.configuration.EGEConstants;
 
-import org.apache.log4j.Logger;
-
 /**
  * <p>
  * Abstract Class offering tools for complex conversions involving archive-like formats, e.g. odt and docx
@@ -48,8 +46,6 @@ import org.apache.log4j.Logger;
  */
 
 public abstract class ComplexConverter {
-
-	private static final Logger LOGGER = Logger.getLogger(ComplexConverter.class);
 
 	protected final String profile;
 

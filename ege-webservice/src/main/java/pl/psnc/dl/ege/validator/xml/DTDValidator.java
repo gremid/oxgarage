@@ -6,12 +6,13 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import org.apache.log4j.Logger;
 import org.jdom.DocType;
 import org.jdom.Document;
 import org.jdom.JDOMException;
@@ -38,7 +39,7 @@ public class DTDValidator
 	implements XmlValidator
 {
 
-	private static final Logger LOGGER = Logger.getLogger(DTDValidator.class);
+	private static final Logger LOGGER = Logger.getLogger(DTDValidator.class.getName());
 
 	/*
 	 * DTD declaration systemId 
@@ -148,7 +149,7 @@ public class DTDValidator
 				el.catchException(ex);
 			}
 			catch (IOException ex) {
-				LOGGER.error(ex.getMessage(), ex);
+                LOGGER.log(Level.SEVERE, ex, ex::getMessage);
 				el.catchException(ex);
 			}
 			finally {
@@ -157,7 +158,7 @@ public class DTDValidator
 						outputStream.close();
 					}
 					catch (IOException ex) {
-						LOGGER.error(ex.getMessage());
+                        LOGGER.log(Level.SEVERE, ex, ex::getMessage);
 					}
 				}
 			}

@@ -11,8 +11,6 @@ import net.sf.saxon.s9api.QName;
 
 import org.tei.exceptions.ConfigurationException;
 
-import org.apache.log4j.Logger;
-
 /**
  * <p>
  * Class specifying the .xlsx document transformation operations.
@@ -24,8 +22,6 @@ import org.apache.log4j.Logger;
  */
 
 public class XlsXConverter extends ComplexConverter {
-
-	private static final Logger LOGGER = Logger.getLogger(XlsXConverter.class);
 
 	/**
 	 * Constructs converter for conversion to TEI

@@ -11,13 +11,13 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Scanner;
 import java.util.Enumeration;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 import java.util.zip.CRC32;
-
-import org.apache.log4j.Logger;
 
 /**
  * Pack of usable EGE IO utilities.
@@ -28,7 +28,7 @@ import org.apache.log4j.Logger;
  */
 public final class EGEIOUtils {
 
-	private static final Logger LOGGER = Logger.getLogger(EGEIOUtils.class);
+	private static final Logger LOGGER = Logger.getLogger(EGEIOUtils.class.getName());
 
 	private EGEIOUtils() {
 	}
@@ -83,14 +83,14 @@ public final class EGEIOUtils {
 					try {
 						fi.close();
 					} catch (IOException ex) {
-						LOGGER.error(ex.getMessage());
+                        LOGGER.log(Level.SEVERE, ex, ex::getMessage);
 					}
 				}
 				if (origin != null) {
 					try {
 						origin.close();
 					} catch (IOException ex) {
-						LOGGER.error(ex.getMessage());
+                        LOGGER.log(Level.SEVERE, ex, ex::getMessage);
 					}
 				}
 			}
@@ -134,7 +134,7 @@ public final class EGEIOUtils {
 			mime.delete();
 			constructZip(file, out, dir);
 		} catch (Exception e) {
-			LOGGER.debug("Error in storing mimetype: " + e.toString());
+			LOGGER.fine("Error in storing mimetype: " + e.toString());
 		}
 		finally {
 			scan.close();

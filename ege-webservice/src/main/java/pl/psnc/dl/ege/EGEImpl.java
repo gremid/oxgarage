@@ -15,17 +15,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.Collections;
-
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
-import org.apache.log4j.xml.DOMConfigurator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import pl.psnc.dl.ege.component.Converter;
 import pl.psnc.dl.ege.component.Recognizer;
 import pl.psnc.dl.ege.component.Validator;
 import pl.psnc.dl.ege.configuration.EGEConfigurationManager;
-import pl.psnc.dl.ege.configuration.EGEConstants;
 import pl.psnc.dl.ege.exception.ConverterException;
 import pl.psnc.dl.ege.exception.EGEException;
 import pl.psnc.dl.ege.exception.RecognizerException;
@@ -53,23 +49,6 @@ public class EGEImpl
 	public final static int BUFFER_SIZE = 131072;
 
 	private static final Logger LOGGER = Logger.getLogger(EGEImpl.class.getName());
-
-	static {
-		try {
-			String pathToProps = EGEConstants.OXGAPP + "log4j.xml";
-			File conf = new File(pathToProps);
-			if (conf.exists())
-				DOMConfigurator.configure(pathToProps);
-			else {
-				BasicConfigurator.configure();
-				Logger.getRootLogger().setLevel(Level.ERROR);
-			}
-		}
-		catch (Exception e1) {
-			BasicConfigurator.configure();
-			Logger.getRootLogger().setLevel(Level.ERROR);
-		}
-	}
 
 	/*
 	 * Contains last thrown exception from ConversionPerformer thread.
@@ -256,7 +235,7 @@ public class EGEImpl
 				return mimeType;
 			}
 			catch (RecognizerException ex) {
-				LOGGER.debug("RecognizerException:" + ex.getMessage());
+				LOGGER.fine(() -> "RecognizerException:" + ex.getMessage());
 			}
 		}
 		throw new RecognizerException(
@@ -338,15 +317,15 @@ public class EGEImpl
 			}
 		}
 		catch (ConverterException ex) {
-			LOGGER.error(ex.getMessage(), ex);
+            LOGGER.log(Level.SEVERE, ex, ex::getMessage);
 			throw ex;
 		}
 		catch (IOException ex) {
-			LOGGER.error(ex.getMessage(), ex);
+            LOGGER.log(Level.SEVERE, ex, ex::getMessage);
 			throw ex;
 		}
 		catch (Exception ex) {
-			LOGGER.error(ex.getMessage(), ex);
+			LOGGER.log(Level.SEVERE, ex, ex::getMessage);
 			throw new EGEException(ex.getMessage());
 		}
 	}
@@ -570,7 +549,7 @@ public class EGEImpl
 				}
 			}
 			catch (IOException ex) {
-				LOGGER.error(ex.getMessage());
+                LOGGER.log(Level.SEVERE, ex, ex::getMessage);
 				ex.printStackTrace();
 			}
 			finally {
@@ -579,8 +558,8 @@ public class EGEImpl
 						os.close();
 					}
 					catch (IOException ex) {
-						LOGGER.error(ex.getMessage());
-					}
+                        LOGGER.log(Level.SEVERE, ex, ex::getMessage);
+                    }
 				}
 			}
 

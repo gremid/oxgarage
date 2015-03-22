@@ -33,8 +33,8 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-
-import org.apache.log4j.Logger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.tei.utils.XMLUtils;
 import org.tei.utils.SaxonProcFactory;
@@ -54,7 +54,7 @@ import pl.psnc.dl.ege.exception.ConverterException;
 
 public class ImageFetcher {
 
-	private static final Logger LOGGER = Logger.getLogger(ImageFetcher.class);
+	private static final Logger LOGGER = Logger.getLogger(ImageFetcher.class.getName());
 
 	/**
 	 * Changes the graphics in TEI so that the images have width and height information included and also copies the images into new directory, changing their names.
@@ -156,7 +156,7 @@ public class ImageFetcher {
 			net.sf.saxon.s9api.DocumentBuilder builder = proc.newDocumentBuilder();
 			return builder.wrap(dom);//XmlUtils.buildXdmNode(dom);
 		} catch(NullPointerException e){
-			LOGGER.debug("Exception: " + e.toString());
+			LOGGER.log(Level.FINE, e, e::getMessage);
 			e.printStackTrace();
 			throw new ConverterException("Couldn't find images directory.");
 		} catch(IOException e) {
@@ -249,7 +249,7 @@ public class ImageFetcher {
 			out.close();
 		}
 		catch(IOException e){
-			LOGGER.debug("IMAGES DEBUG: copyFile Exception " + e.toString());	
+            LOGGER.log(Level.FINE, e, e::getMessage);
 			throw e;
 		}
 	}
@@ -280,7 +280,7 @@ public class ImageFetcher {
 			out.close();
 		}
 		catch (IOException e) {
-			LOGGER.debug("IMAGES DEBUG: Exception " + e.toString());
+            LOGGER.log(Level.FINE, e, e::getMessage);
 			throw e;
 		}
 	}

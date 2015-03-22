@@ -6,9 +6,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
-
-import org.apache.log4j.Logger;
 
 import org.artofsolving.jodconverter.OfficeDocumentConverter;
 import org.artofsolving.jodconverter.office.OfficeManager;
@@ -39,7 +39,7 @@ import pl.psnc.dl.ege.utils.IOResolver;
 
 public class OOConverter implements Converter {
 
-	private static final Logger LOGGER = Logger.getLogger(OOConverter.class);
+	private static final Logger LOGGER = Logger.getLogger(OOConverter.class.getName());
 
 	// Array of portNumbers that the converter can use to launch OpenOffice. 
 	// The ones at the beginning are likely to be used more often.
@@ -140,7 +140,7 @@ public class OOConverter implements Converter {
 			inTmpFile.renameTo(inputFile);
 			String outputExt = OOConfiguration.getExtension(output);
 			File outputFile = new File(outTmpDir + File.separator + "result." + outputExt);
-			LOGGER.debug("OOCONVERTER: " + OOConfiguration.PATHTOOFFICE + ": Converting from: " + inputFile.getName() + " to: " + outputFile.getName());
+			LOGGER.fine("OOCONVERTER: " + OOConfiguration.PATHTOOFFICE + ": Converting from: " + inputFile.getName() + " to: " + outputFile.getName());
 			int portNum = -2;
 			try {
 				synchronized (this) {
@@ -161,7 +161,7 @@ public class OOConverter implements Converter {
 					if (waiting>0) notify();			        
 				}
 			} catch(Exception e) {
-				LOGGER.debug("OOConverter Exception " + e.toString());
+                LOGGER.log(Level.SEVERE, e, e::getMessage);
 				e.printStackTrace();
 				if(portNum!=-2) {
 					officeManager[portNum].stop();

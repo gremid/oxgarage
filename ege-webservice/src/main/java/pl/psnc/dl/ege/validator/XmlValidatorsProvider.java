@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import org.apache.log4j.Logger;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -45,8 +46,7 @@ public class XmlValidatorsProvider extends DefaultHandler {
 
 	private static final String EAD_ID = "ege_ead";
 
-	private static final Logger logger = Logger
-			.getLogger(XmlValidatorsProvider.class);
+	private static final Logger logger = Logger.getLogger(XmlValidatorsProvider.class.getName());
 
 	/*
 	 * One XML validator for data type.
@@ -116,7 +116,7 @@ public class XmlValidatorsProvider extends DefaultHandler {
 			xmlReader.parse(new InputSource(this.getClass()
 					.getResourceAsStream("/validators.xml")));
 		} catch (Exception ex) {
-			logger.error(ex.getMessage(), ex);
+            logger.log(Level.SEVERE, ex, ex::getMessage);
 		}
 	}
 

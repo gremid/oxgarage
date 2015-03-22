@@ -3,8 +3,8 @@ package pl.psnc.dl.ege;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
-import org.apache.log4j.Logger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import pl.psnc.dl.ege.exception.ConverterException;
 import pl.psnc.dl.ege.types.ConversionAction;
@@ -24,8 +24,7 @@ class ConversionPerformer
 
 	private final ExceptionListener el;
 
-	private static final Logger LOGGER = Logger
-			.getLogger(ConversionPerformer.class);
+	private static final Logger LOGGER = Logger.getLogger(ConversionPerformer.class.getName());
 
 
 	public ConversionPerformer(ConversionAction ca, InputStream is,
@@ -47,15 +46,15 @@ class ConversionPerformer
 			os.close();
 		}
 		catch (ConverterException ex) {
-			LOGGER.error(ex.getMessage());
+            LOGGER.log(Level.SEVERE, ex, ex::getMessage);
 			el.catchException(ex);
 		}
 		catch (IOException ex) {
-			LOGGER.error(ex.getMessage());
+            LOGGER.log(Level.SEVERE, ex, ex::getMessage);
 			el.catchException(ex);
 		}
 		catch (Exception ex) {
-			LOGGER.error(ex.getMessage());
+			LOGGER.log(Level.SEVERE, ex, ex::getMessage);
 			el.catchException(ex);
 		}
 		finally {
@@ -64,7 +63,7 @@ class ConversionPerformer
 					os.close();
 				}
 				catch (IOException ex) {
-					LOGGER.error(ex.getMessage(),ex);
+                    LOGGER.log(Level.SEVERE, ex, ex::getMessage);
 					el.catchException(ex);
 				}
 			}
@@ -73,7 +72,7 @@ class ConversionPerformer
 					is.close();
 				}
 				catch (IOException ex) {
-					LOGGER.error(ex.getMessage(),ex);
+                    LOGGER.log(Level.SEVERE, ex, ex::getMessage);
 					el.catchException(ex);
 				}
 			}

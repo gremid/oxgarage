@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.fileupload.FileItemIterator;
 import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.log4j.Logger;
 
 import pl.psnc.dl.ege.EGE;
 import pl.psnc.dl.ege.EGEImpl;
@@ -32,8 +33,7 @@ public class ValidationServlet
 	extends HttpServlet
 {
 
-	private static final Logger LOGGER = Logger
-			.getLogger(ValidationServlet.class);
+	private static final Logger LOGGER = Logger.getLogger(ValidationServlet.class.getName());
 
 	private static final long serialVersionUID = 1L;
 
@@ -168,7 +168,7 @@ public class ValidationServlet
 				throw ex;
 			}
 			catch (Exception ex) {
-				LOGGER.error(ex.getMessage(), ex);
+                LOGGER.log(Level.SEVERE, ex, ex::getMessage);
 				throw ex;
 			}
 			finally {

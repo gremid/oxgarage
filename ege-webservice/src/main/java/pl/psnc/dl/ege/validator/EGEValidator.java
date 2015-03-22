@@ -4,8 +4,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import org.apache.log4j.Logger;
 import org.jdom.JDOMException;
 import org.xml.sax.SAXParseException;
 
@@ -27,7 +28,7 @@ public class EGEValidator
 	implements Validator
 {
 	
-	private static final Logger LOGGER = Logger.getLogger(EGEValidator.class);
+	private static final Logger LOGGER = Logger.getLogger(EGEValidator.class.getName());
 	
 	private static final XmlValidatorsProvider provider = XmlValidatorsProvider
 			.getInstance();
@@ -67,7 +68,7 @@ public class EGEValidator
 			throw ex;
 		}
 		catch (Exception ex) {
-			LOGGER.error(ex.getMessage(), ex);
+			LOGGER.log(Level.SEVERE, ex, ex::getMessage);
 			ValidatorException ve = new ValidatorException(ex.getMessage());
 			ve.setStackTrace(ex.getStackTrace());
 			throw ve;
