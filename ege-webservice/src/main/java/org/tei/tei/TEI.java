@@ -19,7 +19,6 @@ import net.sf.saxon.s9api.XsltTransformer;
 
 import org.tei.docx.DocX;
 import org.tei.exceptions.ConfigurationException;
-import org.tei.utils.FileUtils;
 import org.tei.utils.SaxonProcFactory;
 import org.tei.utils.XMLUtils;
 

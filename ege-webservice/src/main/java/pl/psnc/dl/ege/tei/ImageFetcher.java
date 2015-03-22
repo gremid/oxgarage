@@ -27,7 +27,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.Font;
@@ -35,16 +34,12 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
-import javax.xml.transform.stream.StreamSource;
-
 import org.apache.log4j.Logger;
 
 import org.tei.utils.XMLUtils;
 import org.tei.utils.SaxonProcFactory;
 
 import pl.psnc.dl.ege.exception.ConverterException;
-import pl.psnc.dl.ege.configuration.EGEConstants;
-import pl.psnc.dl.ege.utils.EGEIOUtils;
 
 /**
  * <p>

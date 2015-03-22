@@ -168,4 +168,10 @@
         <parameter id="class" value="uk.ac.ox.oucs.oxgarage.oo.OOConverter"/>
         <parameter id="name" value="OpenOffice Converter"/>
     </extension>
+
+    <extension plugin-id="pl.psnc.dl.ege.root" point-id="Converter" id="TEIConverter">
+        <parameter id="class" value="pl.psnc.dl.ege.tei.TEIConverter"/>
+        <parameter id="name" value="TEI Converter"/>
+    </extension>
+
 </plugin>

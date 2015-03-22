@@ -1,8 +1,6 @@
 package pl.psnc.dl.ege.tei;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 

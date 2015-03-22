@@ -191,7 +191,6 @@
           <artifactId>jodconverter</artifactId>
           <version>3.0-SNAPSHOT</version>
       </dependency>
-
       <dependency>
           <groupId>jdom</groupId>
           <artifactId>jdom</artifactId>
@@ -201,13 +200,11 @@
           <groupId>net.sf.saxon</groupId>
           <artifactId>Saxon-HE</artifactId>
           <version>9.4</version>
-          <scope>compile</scope>
       </dependency>
-    <dependency>
-      <groupId>pl.psnc.dl.ege.tei</groupId>
-      <artifactId>tei-converter</artifactId>
-      <version>0.5</version>
-      <scope>compile</scope>
-    </dependency>
+      <dependency>
+          <groupId>com.thaiopensource</groupId>
+          <artifactId>trang</artifactId>
+          <version>20091111</version>
+      </dependency>
   </dependencies>
 </project>

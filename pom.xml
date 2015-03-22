@@ -74,7 +74,6 @@
     <module>jpf-tools</module>
     <module>ege-api</module>
     <module>ege-framework</module>
-    <module>tei-converter</module>
     <module>ege-webservice</module>
   </modules>
   <build>
