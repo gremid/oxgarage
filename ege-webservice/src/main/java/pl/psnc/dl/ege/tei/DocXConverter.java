@@ -26,7 +26,7 @@ import net.sf.saxon.s9api.XdmNode;
 import org.tei.utils.SaxonProcFactory;
 
 import org.tei.exceptions.ConfigurationException;
-import pl.psnc.dl.ege.configuration.EGEConstants;
+import pl.psnc.dl.ege.EGEConstants;
 
 /**
  * <p>

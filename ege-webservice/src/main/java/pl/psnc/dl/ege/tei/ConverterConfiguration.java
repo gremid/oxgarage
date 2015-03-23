@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 
 import pl.psnc.dl.ege.types.Conversion;
 import pl.psnc.dl.ege.types.DataType;
-import pl.psnc.dl.ege.configuration.EGEConstants;
+import pl.psnc.dl.ege.EGEConstants;
 
 final class ConverterConfiguration
 {

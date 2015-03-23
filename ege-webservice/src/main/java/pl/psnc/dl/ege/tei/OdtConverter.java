@@ -13,7 +13,7 @@ import net.sf.saxon.s9api.SaxonApiException;
 import net.sf.saxon.s9api.XsltTransformer;
 
 import org.tei.exceptions.ConfigurationException;
-import pl.psnc.dl.ege.configuration.EGEConstants;
+import pl.psnc.dl.ege.EGEConstants;
 
 /**
  * <p>

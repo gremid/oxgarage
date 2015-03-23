@@ -39,13 +39,11 @@ import org.tei.exceptions.ConfigurationException;
 import org.tei.utils.SaxonProcFactory;
 
 import pl.psnc.dl.ege.Converter;
-import pl.psnc.dl.ege.configuration.EGEConfigurationManager;
-import pl.psnc.dl.ege.configuration.EGEConstants;
+import pl.psnc.dl.ege.EGEConstants;
 import pl.psnc.dl.ege.exception.ConverterException;
 import pl.psnc.dl.ege.types.Conversion;
 import pl.psnc.dl.ege.types.DataType;
 import pl.psnc.dl.ege.utils.EGEIOUtils;
-import pl.psnc.dl.ege.utils.IOResolver;
 
 
 import com.thaiopensource.relaxng.edit.SchemaCollection;
@@ -66,6 +64,7 @@ import javax.xml.transform.TransformerException;
 
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
+import pl.psnc.dl.ege.utils.ZipStreams;
 
 /**
  * <p>
@@ -91,11 +90,8 @@ public class TEIConverter implements Converter, ErrorHandler {
 
 	public static final String DOCX_ERROR = "Probably trying to convert from DocX with wrong input.";
 
-	private IOResolver ior = EGEConfigurationManager.getInstance()
-			.getStandardIOResolver();
 
-
-	public void error(TransformerException exception)
+    public void error(TransformerException exception)
 			throws TransformerException {
 		LOGGER.info("Error: " + exception.getMessage());
 	}
@@ -428,7 +424,7 @@ public class TEIConverter implements Converter, ErrorHandler {
 	 */
 	private InputStream prepareInputData(InputStream inputStream, File inTempDir)
 			throws IOException, ConverterException {
-		ior.decompressStream(inputStream, inTempDir);
+		ZipStreams.unzip(inputStream, inTempDir);
 		File sFile = searchForData(inTempDir, "^.*\\.((?i)xml)$");
 		if (sFile == null) {
 			//search for any file
@@ -518,7 +514,7 @@ public class TEIConverter implements Converter, ErrorHandler {
 		File outputDir = null;
 		try {
 			inTmpDir = prepareTempDir();
-			ior.decompressStream(inputStream, inTmpDir);
+			ZipStreams.unzip(inputStream, inTmpDir);
 			// avoid processing files ending in .bin
 			File inputFile = searchForData(inTmpDir, "^.*(?<!bin)$");
 			if(inputFile!=null) {
@@ -547,7 +543,7 @@ public class TEIConverter implements Converter, ErrorHandler {
 			result.setOutputStream(fos);
 			transformer.setDestination(result);
 			transformer.transform();
-			ior.compressData(outTempDir, outputStream);
+			ZipStreams.zip(outTempDir, outputStream);
 			}
 		} finally {
 			try {
@@ -581,7 +577,7 @@ public class TEIConverter implements Converter, ErrorHandler {
 		File outputDir = null;
 		try {
 			inTmpDir = prepareTempDir();
-			ior.decompressStream(inputStream, inTmpDir);
+			ZipStreams.unzip(inputStream, inTmpDir);
 			File inputFile = searchForData(inTmpDir, "^.*");
 			outTempDir = prepareTempDir();
 			is = prepareInputData(inputStream, inTmpDir, inputFile);
@@ -643,7 +639,7 @@ public class TEIConverter implements Converter, ErrorHandler {
 			    e.printStackTrace();
 			    
 			}
-			ior.compressData(outTempDir, outputStream);
+			ZipStreams.zip(outTempDir, outputStream);
 		} finally {
 			try {
 				is.close();
@@ -696,7 +692,7 @@ public class TEIConverter implements Converter, ErrorHandler {
 		String fileName = properties.get("fileName");
 		ComplexConverter xlsX = new XlsXConverter(profile, fileName);
 		try {
-			ior.decompressStream(is, tmpDir);
+			ZipStreams.unzip(is, tmpDir);
 			// should contain only single file
 			File xlsXFile = searchForData(tmpDir, "^.*\\.((?i)xlsx)$");
 			if (xlsXFile == null) {
@@ -734,7 +730,7 @@ public class TEIConverter implements Converter, ErrorHandler {
 		String fileName = properties.get("fileName");
 		ComplexConverter docX = new DocXConverter(profile, fileName);
 		try {
-			ior.decompressStream(is, tmpDir);
+			ZipStreams.unzip(is, tmpDir);
 			// should contain only single file
 			File docXFile = searchForData(tmpDir, "^.*\\.((?i)doc|(?i)docx)$");
 			if (docXFile == null) {
@@ -771,7 +767,7 @@ public class TEIConverter implements Converter, ErrorHandler {
 			ConverterException {
 		File inTmpDir = prepareTempDir();
 		File outTmpDir = prepareTempDir();
-		ior.decompressStream(is, inTmpDir);
+		ZipStreams.unzip(is, inTmpDir);
 		File inputFile = searchForData(inTmpDir, "^.*");
 		InputStream inputStream = prepareInputData(is, inTmpDir, inputFile);
 		ComplexConverter docX = null;
@@ -789,7 +785,7 @@ public class TEIConverter implements Converter, ErrorHandler {
 			// pack directory to final DocX file
 			docX.zipToStream(fos, new File(docX.getDirectoryName()));
 			// double compress DocX file anyway
-			ior.compressData(outTmpDir, os);
+			ZipStreams.zip(outTmpDir, os);
 			// clean temporary files
 		} finally {
 			// perform cleanup
@@ -821,7 +817,7 @@ public class TEIConverter implements Converter, ErrorHandler {
 		String fileName = properties.get("fileName");
 		ComplexConverter odt = new OdtConverter(profile, fileName);
 		try {
-			ior.decompressStream(is, tmpDir);
+			ZipStreams.unzip(is, tmpDir);
 			// should contain only single file
 			File odtFile = searchForData(tmpDir, "^.*\\.((?i)odt|(?i)ott)$");
 			if (odtFile == null) {
@@ -855,7 +851,7 @@ public class TEIConverter implements Converter, ErrorHandler {
 			ConverterException {
 		File inTmpDir = prepareTempDir();
 		File outTmpDir = prepareTempDir();
-		ior.decompressStream(is, inTmpDir);
+		ZipStreams.unzip(is, inTmpDir);
 		File inputFile = searchForData(inTmpDir, "^.*");
 		InputStream inputStream = prepareInputData(is, inTmpDir, inputFile);
 		ComplexConverter odt = null;
@@ -873,7 +869,7 @@ public class TEIConverter implements Converter, ErrorHandler {
 			// pack directory to final Odt file
 			odt.zipToStream(fos, new File(odt.getDirectoryName()));
 			// double compress Odt file anyway
-			ior.compressData(outTmpDir, os);
+			ZipStreams.zip(outTmpDir, os);
 			// clean temporary files
 		} finally {
 			// perform cleanup
@@ -908,7 +904,7 @@ public class TEIConverter implements Converter, ErrorHandler {
 		File outputDir = null;
 		try {
 			inTmpDir = prepareTempDir();
-			ior.decompressStream(inputStream, inTmpDir);
+			ZipStreams.unzip(inputStream, inTmpDir);
 			File inputFile = searchForData(inTmpDir, "^.*");
 			outTempDir = prepareTempDir();
 			is = prepareInputData(inputStream, inTmpDir, inputFile);
@@ -949,7 +945,7 @@ public class TEIConverter implements Converter, ErrorHandler {
 				zipOs.close();
 			    }
 			// double compress epub file anyway
-			ior.compressData(outputDir, outputStream);
+			ZipStreams.zip(outputDir, outputStream);
 			// clean temporary files
 		}
 		finally {

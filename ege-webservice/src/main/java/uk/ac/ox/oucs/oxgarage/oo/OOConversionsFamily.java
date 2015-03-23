@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 import pl.psnc.dl.ege.types.DataType;
 import pl.psnc.dl.ege.types.Conversion;
-import pl.psnc.dl.ege.configuration.EGEConstants;
+import pl.psnc.dl.ege.EGEConstants;
 
 /**
  * <p>

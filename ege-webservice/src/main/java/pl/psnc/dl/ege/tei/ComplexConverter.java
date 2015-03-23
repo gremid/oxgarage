@@ -33,7 +33,7 @@ import org.tei.utils.SaxonProcFactory;
 import org.tei.utils.XMLUtils;
 
 import pl.psnc.dl.ege.utils.EGEIOUtils;
-import pl.psnc.dl.ege.configuration.EGEConstants;
+import pl.psnc.dl.ege.EGEConstants;
 
 /**
  * <p>

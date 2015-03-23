@@ -15,13 +15,12 @@ import org.artofsolving.jodconverter.office.OfficeManager;
 import org.artofsolving.jodconverter.office.DefaultOfficeManagerConfiguration;
 
 import pl.psnc.dl.ege.Converter;
-import pl.psnc.dl.ege.configuration.EGEConfigurationManager;
-import pl.psnc.dl.ege.configuration.EGEConstants;
+import pl.psnc.dl.ege.EGEConstants;
 import pl.psnc.dl.ege.exception.ConverterException;
 import pl.psnc.dl.ege.types.Conversion;
 import pl.psnc.dl.ege.types.DataType;
 import pl.psnc.dl.ege.utils.EGEIOUtils;
-import pl.psnc.dl.ege.utils.IOResolver;
+import pl.psnc.dl.ege.utils.ZipStreams;
 
 /**
  * <p>
@@ -49,9 +48,7 @@ public class OOConverter implements Converter {
 
 	private static boolean[] busy = new boolean[numberOfPorts];
 
-	private IOResolver ior = EGEConfigurationManager.getInstance().getStandardIOResolver();
-
-	private static OfficeManager officeManager[] = new OfficeManager[numberOfPorts];
+    private static OfficeManager officeManager[] = new OfficeManager[numberOfPorts];
 
 	private static OfficeDocumentConverter converter[] = new OfficeDocumentConverter[numberOfPorts];
 
@@ -99,7 +96,7 @@ public class OOConverter implements Converter {
 	 */
 	private File prepareInputData(InputStream inputStream, File inTempDir, String extension)
 			throws IOException, ConverterException {
-		ior.decompressStream(inputStream, inTempDir);
+		ZipStreams.unzip(inputStream, inTempDir);
 		File sFile = searchForData(inTempDir, "^.*\\.((?i)"+ extension +")$");
 		if (sFile == null) {
 			//search for any file
@@ -170,7 +167,7 @@ public class OOConverter implements Converter {
 				}
 				throw new ConverterException(e.getMessage());
 			}
-			ior.compressData(outTmpDir, outputStream);
+			ZipStreams.zip(outTmpDir, outputStream);
 		} finally {
 			EGEIOUtils.deleteDirectory(inTmpDir);
 			EGEIOUtils.deleteDirectory(outTmpDir);

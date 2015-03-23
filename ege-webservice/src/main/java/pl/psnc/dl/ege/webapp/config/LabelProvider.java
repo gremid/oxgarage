@@ -1,6 +1,6 @@
 package pl.psnc.dl.ege.webapp.config;
 
-import pl.psnc.dl.ege.configuration.EGEConstants;
+import pl.psnc.dl.ege.EGEConstants;
 
 import java.util.Locale;
 import java.util.ResourceBundle;

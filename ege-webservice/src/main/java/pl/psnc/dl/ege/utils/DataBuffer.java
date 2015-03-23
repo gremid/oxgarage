@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 import org.apache.commons.io.FileCleaningTracker;
 
 import pl.psnc.dl.ege.EGEImpl;
-import pl.psnc.dl.ege.configuration.EGEConstants;
+import pl.psnc.dl.ege.EGEConstants;
 
 /**
  * Keeps collection of buffered byte data, which is used mainly by conversion

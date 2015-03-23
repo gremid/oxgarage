@@ -1,4 +1,4 @@
-package pl.psnc.dl.ege.configuration;
+package pl.psnc.dl.ege;
 
 import java.io.File;
 import java.util.Optional;

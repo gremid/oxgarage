@@ -10,7 +10,7 @@ import net.sf.saxon.s9api.XdmAtomicValue;
 import net.sf.saxon.s9api.QName;
 
 import org.tei.exceptions.ConfigurationException;
-import pl.psnc.dl.ege.configuration.EGEConstants;
+import pl.psnc.dl.ege.EGEConstants;
 
 /**
  * <p>

@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,16 +16,19 @@ import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import pl.psnc.dl.ege.configuration.EGEConfigurationManager;
 import pl.psnc.dl.ege.exception.ConverterException;
 import pl.psnc.dl.ege.exception.EGEException;
 import pl.psnc.dl.ege.exception.ValidatorException;
+import pl.psnc.dl.ege.tei.TEIConverter;
+import pl.psnc.dl.ege.types.Conversion;
 import pl.psnc.dl.ege.types.ConversionAction;
 import pl.psnc.dl.ege.types.ConversionsPath;
 import pl.psnc.dl.ege.types.DataType;
 import pl.psnc.dl.ege.types.ValidationResult;
 import edu.uci.ics.jung.graph.DirectedSparseMultigraph;
 import edu.uci.ics.jung.graph.Graph;
+import pl.psnc.dl.ege.validator.EGEValidator;
+import uk.ac.ox.oucs.oxgarage.oo.OOConverter;
 
 /**
  * <p>
@@ -59,9 +63,49 @@ public class EGEImpl implements EGE, ExceptionListener {
 	 * Default Constructor : initializes basic structures.
 	 */
 	public EGEImpl() {
-        EGEConfigurationManager em = EGEConfigurationManager.getInstance();
-        List<Converter> converters = em.getAvailableConverters();
-        this.validators = em.getAvailableValidators();
+        final DataType teiP5DataType = new DataType("TEI", "text/xml", "TEI P5 XML Document", EGEConstants.TEXTFAMILY);
+        final DataType teiP4DataType = new DataType("P4", "text/xml", "TEI P4 XML Document", EGEConstants.TEXTFAMILY);
+        final DataType teiSimpleDataType = new DataType("Simple", "text/xml", "TEI Simple XML Document", EGEConstants.TEXTFAMILY);
+        final DataType teiTiteDataType = new DataType("Tite", "text/xml", "TEI Tite XML Document", EGEConstants.TEXTFAMILY);
+
+        final DataType oddDataType = new DataType("ODD", "text/xml", "ODD Document", EGEConstants.TEXTFAMILY);
+        final DataType oddcDataType = new DataType("ODDC", "text/xml", "Compiled TEI ODD", EGEConstants.TEXTFAMILY);
+        final DataType schematronDataType = new DataType("sch", "text/xml", "Schematron constraints", EGEConstants.TEXTFAMILY);
+        final DataType isoSchematronDataType = new DataType("isosch", "text/xml", "ISO Schematron constraints", EGEConstants.TEXTFAMILY);
+
+        final DataType markdownDataType = new DataType("markdown", "text/plain", "Markdown tagging", EGEConstants.TEXTFAMILY);
+        final DataType docbookDataType = new DataType("DBK", "text/xml", "DocBook Document", EGEConstants.TEXTFAMILY);
+        final DataType verbatimXmlDataType = new DataType("verbatimxml", "text/xml", "VerbatimXML tagging", EGEConstants.TEXTFAMILY);
+        final DataType nlmDataType = new DataType("NLM", "text/xml", "National Library of Medicine (NLM) DTD 3.0", EGEConstants.TEXTFAMILY);
+        final DataType tcpDataType = new DataType("TCP", "text/xml", "TCP XML Document", EGEConstants.TEXTFAMILY);
+        final DataType cocoaDataType = new DataType("cocoa", "text/plain", "Cocoa tagging", EGEConstants.TEXTFAMILY);
+
+        final DataType csvDataType = new DataType("csv", "text/csv", "Comma-Separated Values (.csv)", EGEConstants.SPREADSHEETFAMILY);
+        final DataType wordpressFeedDataType = new DataType("wordpress", "text/xml", "Wordpress RSS feed  of blog", EGEConstants.TEXTFAMILY);
+
+        final List<Converter> converters = Arrays.<Converter>asList(
+                new TEIConverter(),
+                new OOConverter(),
+                new MultiXslConverter("TEI to Simple", "simple/teitosimple.xsl", new Conversion(teiP5DataType, teiSimpleDataType, true, 11)),
+                new MultiXslConverter("Tite to TEI", "tite/tite-to-tei.xsl", new Conversion(teiTiteDataType, teiP5DataType, true, 11)),
+                new MultiXslConverter("TEI to NLM", "nlm/tei_to_nlm.xsl", new Conversion(teiP5DataType, nlmDataType, true, 11)),
+                new MultiXslConverter("ODDC to Schematron", "odds/extract-sch.xsl", new Conversion(oddcDataType, schematronDataType, true, 11)),
+                new MultiXslConverter("ODDC to ISO Schematron", "odds/extract-isosch.xsl", new Conversion(oddcDataType, isoSchematronDataType, true, 11)),
+                new MultiXslConverter("TEI to Docbook", "docbook/teitodocbook.xsl", new Conversion(teiP5DataType, docbookDataType, true, 10)),
+                new MultiXslConverter("Docbook to TEI", "docbook/docbooktotei.xsl", new Conversion(docbookDataType, teiP5DataType, true, 10)),
+                new MultiXslConverter("P4 to P5", "profiles/default/p4/from.xsl", new Conversion(teiP4DataType, teiP5DataType, true, 10)),
+                new MultiXslConverter("TCP to P5", "tcp/tcp2tei.xsl", new Conversion(tcpDataType, teiP5DataType, true, 10)),
+                new MultiXslConverter("ODD to Compiled ODD", "odds/odd2odd.xsl", new Conversion(oddDataType, oddcDataType, true, 10)),
+                new MultiXslConverter("TEI to VerbatimXML", "verbatimxml/teitoverbatim.xsl", new Conversion(teiP5DataType, verbatimXmlDataType, true, 11)),
+                new MultiXslConverter("CSV to TEI", "profiles/default/csv/from.xsl", new Conversion(csvDataType, teiP5DataType, true, 9)),
+                new MultiXslConverter("TEI to CSV", "profiles/default/csv/to.xsl", new Conversion(teiP5DataType, csvDataType, true, 11)),
+                new MultiXslConverter("MarkDown to TEI", "profiles/default/markdown/from.xsl", new Conversion(markdownDataType, teiP5DataType, true, 9)),
+                new MultiXslConverter("TEI to MarkDown", "profiles/default/markdown/to.xsl", new Conversion(teiP5DataType, markdownDataType, true, 11)),
+                new MultiXslConverter("Cocoa to TEI", "profiles/default/cocoa/from.xsl", new Conversion(cocoaDataType, teiP5DataType, true, 9)),
+                new MultiXslConverter("Wordpress to TEI", "profiles/default/wordpress/from.xsl", new Conversion(wordpressFeedDataType, teiP5DataType, true, 9))
+        );
+
+        this.validators = Arrays.<Validator>asList(new EGEValidator());
 
         final Set<ConversionAction> nodes = new HashSet<ConversionAction>();
         converters.stream().forEach(conv -> conv.getPossibleConversions().stream().map(ac -> new ConversionAction(ac, conv)).forEach(nodes::add));

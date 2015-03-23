@@ -30,11 +30,9 @@ import org.xml.sax.SAXNotRecognizedException;
 import org.xml.sax.SAXNotSupportedException;
 
 import pl.psnc.dl.ege.utils.EGEIOUtils;
-import pl.psnc.dl.ege.configuration.EGEConfigurationManager;
-import pl.psnc.dl.ege.configuration.EGEConstants;
 import pl.psnc.dl.ege.exception.ConverterException;
 import pl.psnc.dl.ege.types.Conversion;
-import pl.psnc.dl.ege.utils.IOResolver;
+import pl.psnc.dl.ege.utils.ZipStreams;
 
 /**
  * <p>
@@ -61,12 +59,9 @@ public class MultiXslConverter implements Converter {
 
 	private URI defaultUri = null;
 
-	private final IOResolver ior = EGEConfigurationManager.getInstance()
-			.getStandardIOResolver();
-
-	/*
-	 * List of possible conversions.
-	 */
+    /*
+     * List of possible conversions.
+     */
 	private List<Conversion> possibleConversions = new ArrayList<Conversion>();
 
     public MultiXslConverter(String name, String xslPath, Conversion conversion) {
@@ -92,7 +87,7 @@ public class MultiXslConverter implements Converter {
 				outTempDir = performStandardTransformation(prepareInputData(
 						inputStream, inTempDir));
 			}
-			ior.compressData(outTempDir, outputStream);
+			ZipStreams.zip(outTempDir, outputStream);
 		} catch (ZipException ex) {
 			throw new ConverterException(
 					"Error during conversion unzipping : probably wrong input data.");
@@ -126,7 +121,7 @@ public class MultiXslConverter implements Converter {
 	 */
 	private InputStream prepareInputData(InputStream inputStream, File inTempDir)
 			throws IOException, ConverterException {
-		ior.decompressStream(inputStream, inTempDir);
+		ZipStreams.unzip(inputStream, inTempDir);
 		// perform transform
 		File sFile = searchForData(inTempDir, "^.*\\.((?i)xml)$");
 		if (sFile == null) {

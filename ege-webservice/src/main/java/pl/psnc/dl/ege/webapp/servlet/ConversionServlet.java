@@ -32,8 +32,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import pl.psnc.dl.ege.EGE;
 import pl.psnc.dl.ege.EGEImpl;
-import pl.psnc.dl.ege.configuration.EGEConfigurationManager;
-import pl.psnc.dl.ege.configuration.EGEConstants;
+import pl.psnc.dl.ege.EGEConstants;
 import pl.psnc.dl.ege.exception.ConverterException;
 import pl.psnc.dl.ege.exception.EGEException;
 import pl.psnc.dl.ege.exception.ValidatorException;
@@ -43,7 +42,7 @@ import pl.psnc.dl.ege.types.DataType;
 import pl.psnc.dl.ege.types.ValidationResult;
 import pl.psnc.dl.ege.utils.DataBuffer;
 import pl.psnc.dl.ege.utils.EGEIOUtils;
-import pl.psnc.dl.ege.utils.IOResolver;
+import pl.psnc.dl.ege.utils.ZipStreams;
 import pl.psnc.dl.ege.webapp.config.LabelProvider;
 import pl.psnc.dl.ege.webapp.config.MimeExtensionProvider;
 import pl.psnc.dl.ege.webapp.request.ConversionRequestResolver;
@@ -399,8 +398,7 @@ public class ConversionServlet extends HttpServlet {
 	    File zipFile = null;
 	    FileOutputStream fos = null;
 	    String newTemp = UUID.randomUUID().toString();
-	    IOResolver ior = EGEConfigurationManager.getInstance().getStandardIOResolver();
-	    // Check if there are any images to copy
+        // Check if there are any images to copy
 	    if(iter!=null && iter.hasNext()) {
 		// Create directory for images
 		File images = new File(buffDir + File.separator + imagesDirectory + File.separator);
@@ -431,7 +429,7 @@ public class ConversionServlet extends HttpServlet {
         final File tempDir = EGEConstants.tempDir();
         zipFile = new File(tempDir, newTemp + EZP_EXT);
 	    fos = new FileOutputStream(zipFile);
-	    ior.compressData(buffDir, fos);
+	    ZipStreams.zip(buffDir, fos);
 	    ins = new FileInputStream(zipFile);
 	    File szipFile = new File(tempDir, newTemp + ZIP_EXT);
 	    fos = new FileOutputStream(szipFile);
