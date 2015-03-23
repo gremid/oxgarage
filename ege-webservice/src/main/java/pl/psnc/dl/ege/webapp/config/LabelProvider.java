@@ -1,16 +1,9 @@
 package pl.psnc.dl.ege.webapp.config;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FilenameFilter;
-import java.util.LinkedHashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import pl.psnc.dl.ege.configuration.EGEConstants;
+
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 /**
  * Singleton class which provides EGE web application
@@ -23,43 +16,12 @@ public final class LabelProvider
 {
 	private static LabelProvider instance = null;
 	
-	private static final String REGEXP_LABEL_CONT = "labels_[a-z][a-z].xml";
-	
-	private static final Logger LOGGER = Logger.getLogger(LabelProvider.class.getName());
-	
-	private Map<String,Properties> labels; 
-	
-	private LabelProvider(String path){
-		File dir = new File(path);
-		FilenameFilter fnf = new FilenameFilter(){
-			@Override
-			public boolean accept(File dir, String name)
-			{
-				if(name.matches(REGEXP_LABEL_CONT)){
-					return true;
-				}
-				return false;
-			}
-			
-		};
-		labels = new LinkedHashMap<String,Properties>();
-		for(File lc : dir.listFiles(fnf)){
-			Properties props = new Properties();
-			try{
-				props.loadFromXML(new FileInputStream(lc));
-				String loc = lc.toString();
-				loc = loc.substring(loc.length() - 6, loc.length() - 4);
-				labels.put(loc, props);
-			}
-			catch(Exception ex){
-                LOGGER.log(Level.SEVERE, ex, ex::getMessage);
-			}
-		}
+	private LabelProvider(){
 	}
 	
-	public static LabelProvider getInstance(String path){
+	public static LabelProvider getInstance(){
 		if(instance == null){
-			instance = new LabelProvider(path); 
+			instance = new LabelProvider();
 		}
 		return instance;
 	}
@@ -88,27 +50,6 @@ public final class LabelProvider
 	 * @return
 	 */
 	public String getLabel(String key, String locale){
-		Properties props = labels.get(locale);
-		if(props != null){
-			return props.getProperty(key);
-		}
-		return "";
+        return ResourceBundle.getBundle("/labels", new Locale(locale)).getString(key);
 	}
-	
-	/**
-	 * Returns label 
-	 * in language specified by locale.<br/>
-	 * If label does not exists method
-	 * will return an empty String.     
-	 * 
-	 * @param key
-	 * @param locale
-	 * @return
-	 */
-	public String getLabel(String key, Locale locale){
-		return getLabel(key,locale.getCountry());
-	}
-	
-	
-	
 }

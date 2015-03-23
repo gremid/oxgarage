@@ -46,7 +46,6 @@ import pl.psnc.dl.ege.utils.EGEIOUtils;
 import pl.psnc.dl.ege.utils.IOResolver;
 import pl.psnc.dl.ege.webapp.config.LabelProvider;
 import pl.psnc.dl.ege.webapp.config.MimeExtensionProvider;
-import pl.psnc.dl.ege.webapp.config.PreConfig;
 import pl.psnc.dl.ege.webapp.request.ConversionRequestResolver;
 import pl.psnc.dl.ege.webapp.request.ConversionsPropertiesHandler;
 import pl.psnc.dl.ege.webapp.request.Method;
@@ -513,8 +512,7 @@ public class ConversionServlet extends HttpServlet {
 	 * @return
 	 */
 	public LabelProvider getLabelProvider() {
-		return (LabelProvider) this.getServletContext().getAttribute(
-				PreConfig.LABEL_PROVIDER);
+		return LabelProvider.getInstance();
 	}
 
 	/**
@@ -523,8 +521,7 @@ public class ConversionServlet extends HttpServlet {
 	 * @return
 	 */
 	public MimeExtensionProvider getMimeExtensionProvider() {
-		return (MimeExtensionProvider) this.getServletContext().getAttribute(
-				PreConfig.MIME_EXTENSION_PROVIDER);
+		return MimeExtensionProvider.getInstance();
 	}
 
 }

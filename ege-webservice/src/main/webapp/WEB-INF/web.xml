@@ -3,11 +3,6 @@
 	xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 	<display-name>ege-webapp</display-name>
-	<listener>
-		<listener-class>
-			pl.psnc.dl.ege.webapp.config.PreConfig
-		</listener-class>
-	</listener>
 	<servlet>
 		<description>
 			Server request for conversion operations
