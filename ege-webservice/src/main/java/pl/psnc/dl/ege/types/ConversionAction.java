@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import pl.psnc.dl.ege.Converter;
-import pl.psnc.dl.ege.exception.ConverterException;
+import pl.psnc.dl.ege.ConverterException;
 
 /**
  * Converter action class is a base for nodes of convert graph - each action

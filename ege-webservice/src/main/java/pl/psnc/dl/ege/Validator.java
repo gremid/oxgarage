@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-import pl.psnc.dl.ege.exception.EGEException;
-import pl.psnc.dl.ege.exception.ValidatorException;
 import pl.psnc.dl.ege.types.DataType;
 import pl.psnc.dl.ege.types.ValidationResult;
 

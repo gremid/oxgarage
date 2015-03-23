@@ -6,9 +6,6 @@ import java.io.OutputStream;
 import java.util.List;
 import java.util.Set;
 
-import pl.psnc.dl.ege.exception.ConverterException;
-import pl.psnc.dl.ege.exception.EGEException;
-import pl.psnc.dl.ege.exception.ValidatorException;
 import pl.psnc.dl.ege.types.ConversionsPath;
 import pl.psnc.dl.ege.types.DataType;
 import pl.psnc.dl.ege.types.ValidationResult;

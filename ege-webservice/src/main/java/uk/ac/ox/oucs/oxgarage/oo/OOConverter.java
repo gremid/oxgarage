@@ -16,7 +16,7 @@ import org.artofsolving.jodconverter.office.DefaultOfficeManagerConfiguration;
 
 import pl.psnc.dl.ege.Converter;
 import pl.psnc.dl.ege.EGEConstants;
-import pl.psnc.dl.ege.exception.ConverterException;
+import pl.psnc.dl.ege.ConverterException;
 import pl.psnc.dl.ege.types.Conversion;
 import pl.psnc.dl.ege.types.DataType;
 import pl.psnc.dl.ege.io.ZipStreams;

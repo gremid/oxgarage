@@ -16,9 +16,6 @@ import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import pl.psnc.dl.ege.exception.ConverterException;
-import pl.psnc.dl.ege.exception.EGEException;
-import pl.psnc.dl.ege.exception.ValidatorException;
 import pl.psnc.dl.ege.tei.TEIConverter;
 import pl.psnc.dl.ege.types.Conversion;
 import pl.psnc.dl.ege.types.ConversionAction;

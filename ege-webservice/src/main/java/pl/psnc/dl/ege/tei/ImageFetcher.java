@@ -39,7 +39,7 @@ import java.util.logging.Logger;
 import org.tei.utils.XMLUtils;
 import org.tei.utils.SaxonProcFactory;
 
-import pl.psnc.dl.ege.exception.ConverterException;
+import pl.psnc.dl.ege.ConverterException;
 
 /**
  * <p>

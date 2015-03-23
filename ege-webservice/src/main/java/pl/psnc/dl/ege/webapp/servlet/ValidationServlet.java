@@ -18,7 +18,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import pl.psnc.dl.ege.EGE;
 import pl.psnc.dl.ege.EGEImpl;
-import pl.psnc.dl.ege.exception.ValidatorException;
+import pl.psnc.dl.ege.ValidatorException;
 import pl.psnc.dl.ege.types.DataType;
 import pl.psnc.dl.ege.types.ValidationResult;
 import pl.psnc.dl.ege.webapp.request.Method;

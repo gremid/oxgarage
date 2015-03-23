@@ -11,8 +11,8 @@ import org.jdom.JDOMException;
 import org.xml.sax.SAXParseException;
 
 import pl.psnc.dl.ege.Validator;
-import pl.psnc.dl.ege.exception.EGEException;
-import pl.psnc.dl.ege.exception.ValidatorException;
+import pl.psnc.dl.ege.EGEException;
+import pl.psnc.dl.ege.ValidatorException;
 import pl.psnc.dl.ege.types.DataType;
 import pl.psnc.dl.ege.types.ValidationResult;
 import pl.psnc.dl.ege.validator.xml.XmlValidator;

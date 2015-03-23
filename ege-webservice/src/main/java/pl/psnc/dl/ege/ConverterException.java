@@ -1,4 +1,4 @@
-package pl.psnc.dl.ege.exception;
+package pl.psnc.dl.ege;
 
 /**
  * Should be threw if some error occurred during

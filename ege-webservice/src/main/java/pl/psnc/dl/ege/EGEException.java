@@ -1,4 +1,4 @@
-package pl.psnc.dl.ege.exception;
+package pl.psnc.dl.ege;
 
 /**
  * Standard EGE class of exceptions.
