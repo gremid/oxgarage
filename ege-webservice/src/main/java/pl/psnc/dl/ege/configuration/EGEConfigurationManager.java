@@ -73,7 +73,7 @@ public class EGEConfigurationManager {
         final DataType wordpressFeedDataType = new DataType("wordpress", "text/xml", "Wordpress RSS feed  of blog", EGEConstants.TEXTFAMILY);
 
         return Arrays.<Converter>asList(
-                new NamedConverter("TEI Converter", new TEIConverter()),
+                //new NamedConverter("TEI Converter", new TEIConverter()),
                 new NamedConverter("OpenOffice Converter", new OOConverter()),
                 new NamedConverter("TEI to Simple", new MultiXslConverter(URI.create("teixsl:simple/teitosimple.xsl"), new ConversionActionArguments(teiP5DataType, teiSimpleDataType, true, 11))),
                 new NamedConverter("Tite to TEI", new MultiXslConverter(URI.create("teixsl:tite/tite-to-tei.xsl"), new ConversionActionArguments(teiTiteDataType, teiP5DataType, true, 11))),

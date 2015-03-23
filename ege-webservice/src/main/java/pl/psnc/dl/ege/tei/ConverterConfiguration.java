@@ -129,9 +129,6 @@ final class ConverterConfiguration
 				}
 			}
 		}
-		else {
-			throw new RuntimeException();
-		}
 	}
 
 
