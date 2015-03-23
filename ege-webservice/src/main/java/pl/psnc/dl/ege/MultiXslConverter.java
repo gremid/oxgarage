@@ -10,7 +10,6 @@ import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import java.util.regex.Pattern;
 import java.util.zip.ZipException;
@@ -31,13 +30,10 @@ import org.xml.sax.SAXNotRecognizedException;
 import org.xml.sax.SAXNotSupportedException;
 
 import pl.psnc.dl.ege.utils.EGEIOUtils;
-import pl.psnc.dl.ege.component.ConfigurableConverter;
 import pl.psnc.dl.ege.configuration.EGEConfigurationManager;
 import pl.psnc.dl.ege.configuration.EGEConstants;
 import pl.psnc.dl.ege.exception.ConverterException;
-import pl.psnc.dl.ege.exception.EGEException;
 import pl.psnc.dl.ege.types.ConversionActionArguments;
-import pl.psnc.dl.ege.types.DataType;
 import pl.psnc.dl.ege.utils.IOResolver;
 
 /**
@@ -51,15 +47,16 @@ import pl.psnc.dl.ege.utils.IOResolver;
  * 
  * @author mariuszs
  */
-public class MultiXslConverter implements ConfigurableConverter {
+public class MultiXslConverter implements Converter {
 
 	private static final String EAD = "EAD";
 	
 	private static final String MASTER = "MASTER";
+    private final String name;
 
-	/*
-	 * URI of resource - xsl transformation scheme.
-	 */
+    /*
+     * URI of resource - xsl transformation scheme.
+     */
 	private URI xslUri;
 
 	private URI defaultUri = null;
@@ -72,10 +69,8 @@ public class MultiXslConverter implements ConfigurableConverter {
 	 */
 	private List<ConversionActionArguments> possibleConversions = new ArrayList<ConversionActionArguments>();
 
-    public MultiXslConverter() {
-    }
-
-    public MultiXslConverter(String xslPath, ConversionActionArguments conversion) {
+    public MultiXslConverter(String name, String xslPath, ConversionActionArguments conversion) {
+        this.name = name;
         this.xslUri = new File(EGEConstants.TEI_STYLESHEETS, xslPath).toURI();
         this.possibleConversions.add(conversion);
     }
@@ -338,42 +333,8 @@ public class MultiXslConverter implements ConfigurableConverter {
 		return false;
 	}
 
-	public void configure(Map<String, String> params) throws EGEException {
-		try {
-			xslUri = new File(EGEConstants.TEI_STYLESHEETS, params.get("xsluri")).toURI();
-			String iFormat = params.get("iFormat");
-			StringBuffer sb = new StringBuffer();
-			sb.append("jar:file:");
-			sb.append(getClass().getProtectionDomain().getCodeSource()
-					.getLocation().getFile());
-			// default xsl
-			if (EAD.equals(iFormat)) {
-				sb.append("!/ead2enrich/ead2enrich.xsl");
-				defaultUri = new URI(sb.toString());
-			} else if (MASTER.equals(iFormat)) {
-				sb.append("!/master2enrich/master2enrich.xsl");
-				defaultUri = new URI(sb.toString());
-			}
-			String iMIME = params.get("iMimeType");
-			String iDescription = params.get("iDescription");
-			String iType = EGEConstants.getType(params.get("iType"));
-			String oFormat = params.get("oFormat");
-			String oMIME = params.get("oMimeType");
-			String oDescription = params.get("oDescription");
-			String oType = EGEConstants.getType(params.get("oType"));
-			boolean visibility = params.get("visibility").equals("true");
-			int cost = Integer.parseInt(params.get("cost"));
-			ConversionActionArguments cadt = new ConversionActionArguments(
-					new DataType(iFormat, iMIME, iDescription, iType), 
-					new DataType(oFormat, oMIME, oDescription, oType), visibility, cost);
-			possibleConversions.add(cadt);
-		} catch (NullPointerException ex) {
-			throw new EGEException(EGEException.WRONG_CONFIGURATION
-					+ " 'null' value of parameter.");
-		} catch (Exception ex) {
-			throw new EGEException(EGEException.WRONG_CONFIGURATION + " "
-					+ ex.getMessage());
-		}
-	}
-
+    @Override
+    public String toString() {
+        return name;
+    }
 }

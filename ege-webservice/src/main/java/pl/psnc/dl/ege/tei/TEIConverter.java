@@ -38,7 +38,7 @@ import org.xml.sax.ErrorHandler;
 import org.tei.exceptions.ConfigurationException;
 import org.tei.utils.SaxonProcFactory;
 
-import pl.psnc.dl.ege.component.Converter;
+import pl.psnc.dl.ege.Converter;
 import pl.psnc.dl.ege.configuration.EGEConfigurationManager;
 import pl.psnc.dl.ege.configuration.EGEConstants;
 import pl.psnc.dl.ege.exception.ConverterException;
@@ -80,7 +80,7 @@ import org.xml.sax.SAXParseException;
  * @author mariuszs
  * 
  */
-public class TEIConverter implements Converter,ErrorHandler {
+public class TEIConverter implements Converter, ErrorHandler {
 	
 	private static final String EX_NO_FILE_DATA_WAS_FOUND = "No file data was found for conversion";
 
@@ -1024,4 +1024,9 @@ public class TEIConverter implements Converter,ErrorHandler {
 	public List<ConversionActionArguments> getPossibleConversions() {
 		return (List<ConversionActionArguments>) ConverterConfiguration.CONVERSIONS;
 	}
+
+    @Override
+    public String toString() {
+        return "TEI Converter";
+    }
 }

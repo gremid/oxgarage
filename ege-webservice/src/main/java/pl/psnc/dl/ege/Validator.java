@@ -1,4 +1,4 @@
-package pl.psnc.dl.ege.component;
+package pl.psnc.dl.ege;
 
 import java.io.IOException;
 import java.io.InputStream;

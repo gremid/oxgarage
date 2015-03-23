@@ -1,8 +1,5 @@
 package pl.psnc.dl.ege;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -18,13 +15,9 @@ import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import pl.psnc.dl.ege.component.Converter;
-import pl.psnc.dl.ege.component.Recognizer;
-import pl.psnc.dl.ege.component.Validator;
 import pl.psnc.dl.ege.configuration.EGEConfigurationManager;
 import pl.psnc.dl.ege.exception.ConverterException;
 import pl.psnc.dl.ege.exception.EGEException;
-import pl.psnc.dl.ege.exception.RecognizerException;
 import pl.psnc.dl.ege.exception.ValidatorException;
 import pl.psnc.dl.ege.types.ConversionAction;
 import pl.psnc.dl.ege.types.ConversionActionArguments;
@@ -42,9 +35,7 @@ import edu.uci.ics.jung.graph.Graph;
  * 
  * @author mariuszs
  */
-public class EGEImpl
-	implements EGE, ExceptionListener
-{
+public class EGEImpl implements EGE, ExceptionListener {
 
 	public final static int BUFFER_SIZE = 131072;
 
@@ -64,11 +55,6 @@ public class EGEImpl
 	 * List of available validator plugins : loaded through extension manager.
 	 */
 	private List<Validator> validators;
-
-	/*
-	 * List of available recognizer plugins : loaded through extension manager.
-	 */
-	private List<Recognizer> recognizers;
 
 	/*
 	 * List of available converter plugins : loaded through extension manager.
@@ -98,7 +84,6 @@ public class EGEImpl
 		em = EGEConfigurationManager.getInstance();
 		this.converters = em.getAvailableConverters();
 		this.validators = em.getAvailableValidators();
-		this.recognizers = em.getAvailableRecognizers();
 		int size = converters.size();
 		Set<ConversionAction> nodes = new HashSet<ConversionAction>();
 		for (int i = 0; i < size; i++) {
@@ -210,58 +195,6 @@ public class EGEImpl
 	
 	
 
-	/**
-	 * Method performs recognition of the MIME type of an input data. If any of
-	 * the loaded {@link Recognizer} implementations recognizes MIME type,
-	 * method returns String value of this MIME type, otherwise method throws
-	 * exception.
-	 * 
-	 * @param inputData
-	 *            input stream that contains necessary data
-	 * @return MIME type as String
-	 * @throws RecognizerException
-	 * @throws IOException
-	 */
-	public String performRecognition(InputStream inputData)
-		throws RecognizerException, IOException
-	{
-		ByteArrayInputStream is = new ByteArrayInputStream(
-				inputStreamToByteArray(inputData));
-		String mimeType;
-		for (Recognizer r : recognizers) {
-			try {
-				mimeType = r.recognize(is);
-				is.reset();
-				return mimeType;
-			}
-			catch (RecognizerException ex) {
-				LOGGER.fine(() -> "RecognizerException:" + ex.getMessage());
-			}
-		}
-		throw new RecognizerException(
-				"MIME type of specified data was not recognized!");
-	}
-
-
-	private byte[] inputStreamToByteArray(InputStream inputStream)
-		throws IOException
-	{
-		byte[] out = new byte[0];
-		BufferedInputStream is = new BufferedInputStream(inputStream);
-		int len = 0;
-		byte[] buf = new byte[BUFFER_SIZE];
-		byte[] tmp = null;
-		while ((len = is.read(buf)) != -1) {
-			tmp = new byte[out.length + len];
-			System.arraycopy(out, 0, tmp, 0, out.length);
-			System.arraycopy(buf, 0, tmp, out.length, len);
-			out = tmp;
-			tmp = null;
-		}
-		return out;
-	}
-
-	
 	/**
 	 * Performs sequence of conversions based on specified convert path.<br/>
 	 * Data is taken from selected input stream and after all sequenced

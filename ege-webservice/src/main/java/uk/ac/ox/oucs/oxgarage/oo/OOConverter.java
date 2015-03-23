@@ -14,7 +14,7 @@ import org.artofsolving.jodconverter.OfficeDocumentConverter;
 import org.artofsolving.jodconverter.office.OfficeManager;
 import org.artofsolving.jodconverter.office.DefaultOfficeManagerConfiguration;
 
-import pl.psnc.dl.ege.component.Converter;
+import pl.psnc.dl.ege.Converter;
 import pl.psnc.dl.ege.configuration.EGEConfigurationManager;
 import pl.psnc.dl.ege.configuration.EGEConstants;
 import pl.psnc.dl.ege.exception.ConverterException;
@@ -188,4 +188,9 @@ public class OOConverter implements Converter {
 		if(i==numberOfPorts) return -1;
 		return i;
 	}
+
+    @Override
+    public String toString() {
+        return "OpenOffice Converter";
+    }
 }

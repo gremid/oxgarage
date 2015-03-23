@@ -4,8 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import pl.psnc.dl.ege.component.Converter;
-import pl.psnc.dl.ege.component.NamedConverter;
+import pl.psnc.dl.ege.Converter;
 import pl.psnc.dl.ege.exception.ConverterException;
 
 /**
@@ -27,7 +26,7 @@ public class ConversionAction {
 	 * Constructor with basic parameters: convertionActionArguments and
 	 * reference to converter.
 	 * 
-	 * @param convertionActionArguments arguments for conversion action
+	 * @param conversionActionArguments arguments for conversion action
 	 * @param converter implementation of {@link Converter} interface 
 	 */
 	public ConversionAction(
@@ -143,12 +142,6 @@ public class ConversionAction {
 
 	@Override
 	public String toString() {
-		if(converter instanceof NamedConverter){
-			return conversionActionArguments.toString() + "(" + converter.toString()
-				+ ")";
-		}
-		else{
-			return conversionActionArguments.toString() + "(Nameless converter)";
-		}
+        return conversionActionArguments.toString() + "(" + converter.toString() + ")";
 	}
 }

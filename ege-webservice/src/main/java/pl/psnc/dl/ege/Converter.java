@@ -1,4 +1,4 @@
-package pl.psnc.dl.ege.component;
+package pl.psnc.dl.ege;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,7 +26,7 @@ import pl.psnc.dl.ege.types.ConversionActionArguments;
  * 
  * @author mariuszs
  */
-public interface Converter{
+public interface Converter {
 	
 	/**
 	 * Method performs conversion of streamed input data and puts converted data to

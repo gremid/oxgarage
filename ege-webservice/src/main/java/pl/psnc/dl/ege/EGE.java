@@ -8,7 +8,6 @@ import java.util.Set;
 
 import pl.psnc.dl.ege.exception.ConverterException;
 import pl.psnc.dl.ege.exception.EGEException;
-import pl.psnc.dl.ege.exception.RecognizerException;
 import pl.psnc.dl.ege.exception.ValidatorException;
 import pl.psnc.dl.ege.types.ConversionsPath;
 import pl.psnc.dl.ege.types.DataType;
@@ -95,21 +94,6 @@ public interface EGE
 			final DataType inputDataType)
 		throws IOException, ValidatorException, EGEException;
 	
-	
-	/**
-	 * Method performs recognition of the MIME type of an input data. If any of
-	 * the loaded {@link Recognizer} implementations recognizes MIME type,
-	 * method returns String value of this MIME type, otherwise method throws
-	 * exception.
-	 * 
-	 * @param inputData
-	 *            input stream that contains necessary data
-	 * @return MIME type as String
-	 * @throws RecognizerException
-	 * @throws IOException
-	 */
-	public String performRecognition(InputStream inputData)
-		throws RecognizerException, IOException;
 	
 	/**
 	 * Performs sequence of conversions based on specified convert path.<br/>

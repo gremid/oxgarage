@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 import org.jdom.JDOMException;
 import org.xml.sax.SAXParseException;
 
-import pl.psnc.dl.ege.component.Validator;
+import pl.psnc.dl.ege.Validator;
 import pl.psnc.dl.ege.exception.EGEException;
 import pl.psnc.dl.ege.exception.ValidatorException;
 import pl.psnc.dl.ege.types.DataType;
