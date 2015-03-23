@@ -41,7 +41,7 @@ class ConversionPerformer
 	{
 		try {
 			ca.getConverter()
-					.convert(is, os, ca.getConversionActionArguments());
+					.convert(is, os, ca.getConversion());
 			is.close();
 			os.close();
 		}

@@ -3,13 +3,10 @@ package uk.ac.ox.oucs.oxgarage.oo;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
 import java.io.File;
-import pl.psnc.dl.ege.configuration.EGEConstants;
-import java.io.FileNotFoundException;
 
 import pl.psnc.dl.ege.types.DataType;
-import pl.psnc.dl.ege.types.ConversionActionArguments;
+import pl.psnc.dl.ege.types.Conversion;
 
 /**
  * <p>
@@ -31,7 +28,7 @@ public class OOConfiguration {
 	private static HashMap<String, String> extensions;
 
 	// list of all possible conversions
-	public static List<ConversionActionArguments> CONVERSIONS;
+	public static List<Conversion> CONVERSIONS;
 
 	static {
 		ConversionFamilies = OOConversionsFamily.getFamilies();		
@@ -40,7 +37,7 @@ public class OOConfiguration {
 	}
 
 	public static void getConversions () {
-		CONVERSIONS = new ArrayList<ConversionActionArguments>();		
+		CONVERSIONS = new ArrayList<Conversion>();
 		for (OOConversionsFamily family : ConversionFamilies) {
 			family.addConversions(CONVERSIONS);
 		}

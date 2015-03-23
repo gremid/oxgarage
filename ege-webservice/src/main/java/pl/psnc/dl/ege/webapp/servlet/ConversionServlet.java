@@ -192,7 +192,7 @@ public class ConversionServlet extends HttpServlet {
 						+ SLASH);
 				pathopt.append("<conversion id=\"" + ca.toString()
 						+ "\" index=\"" + counter + "\" >");
-				String paramsDefs = ca.getConversionActionArguments().getPropertiesDefinitions();
+				String paramsDefs = ca.getConversion().getPropertiesDefinitions();
 				if (paramsDefs.length() > 0) {
 					Properties props = new Properties();
 					props.loadFromXML(new ByteArrayInputStream(paramsDefs.getBytes("UTF-8")));
@@ -500,7 +500,7 @@ public class ConversionServlet extends HttpServlet {
 			cpp.applyPathProperties(cP);
 		} else {// apply empty properties if no properties were provided
 			for (int i = 0; i < cP.getPath().size(); i++) {
-				cP.getPath().get(i).getConversionActionArguments().setProperties(null);
+				cP.getPath().get(i).getConversion().setProperties(null);
 			}
 		}
 	}

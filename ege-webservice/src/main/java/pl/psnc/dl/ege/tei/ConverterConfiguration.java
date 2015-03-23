@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Arrays;
 import java.util.logging.Logger;
 
-import pl.psnc.dl.ege.types.ConversionActionArguments;
+import pl.psnc.dl.ege.types.Conversion;
 import pl.psnc.dl.ege.types.DataType;
 import pl.psnc.dl.ege.configuration.EGEConstants;
 
@@ -23,7 +23,7 @@ final class ConverterConfiguration
 	
 	public static final String ZIP_MIME = "application/zip";
 	
-	public static final List<ConversionActionArguments> CONVERSIONS = new ArrayList<ConversionActionArguments>();
+	public static final List<Conversion> CONVERSIONS = new ArrayList<Conversion>();
 
 	public static final String PROFILE_KEY = "pl.psnc.dl.ege.tei.profileNames";
 
@@ -91,7 +91,7 @@ final class ConverterConfiguration
 				if(sbParams.charAt(sbParams.length() - 1)==',') sbParams.deleteCharAt(sbParams.length() - 1);
 				sbParams.append("</entry><entry key=\"" + PROFILE_KEY + ".type\">array</entry>");
 				sbParams.append("</properties>");
-				ConversionActionArguments caa = new ConversionActionArguments(
+				Conversion caa = new Conversion(
 					      new DataType(format.getFormatName(), XML_MIME, format.getInputDescription(), 
 								EGEConstants.getType(format.getInputType())), 
 					      new DataType(format.getId(), format.getMimeType(), 
@@ -104,7 +104,7 @@ final class ConverterConfiguration
 					LOGGER.fine(() -> "registered type " + format.getMimeType());
 				    }
 				if (format.equals(Format.XHTML) || format.equals(Format.DOCX) || format.equals(Format.ODT)) {
-					ConversionActionArguments caa2 = new ConversionActionArguments(
+					Conversion caa2 = new Conversion(
 							new DataType(format.getId(), format.getMimeType(), 
 								format.getOutputDescription(), EGEConstants.TEXTFAMILY),
 							new DataType(format.getFormatName(), XML_MIME, 
@@ -114,7 +114,7 @@ final class ConverterConfiguration
 					CONVERSIONS.add(caa2);
 				}
 				else if (format.equals(Format.XLSX) ) {
-					ConversionActionArguments caa2 = new ConversionActionArguments(
+					Conversion caa2 = new Conversion(
 							new DataType(format.getId(), format.getMimeType(), 
 								format.getOutputDescription(), EGEConstants.SPREADSHEETFAMILY),
 							new DataType(format.getFormatName(), XML_MIME, 

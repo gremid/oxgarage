@@ -33,7 +33,7 @@ import pl.psnc.dl.ege.utils.EGEIOUtils;
 import pl.psnc.dl.ege.configuration.EGEConfigurationManager;
 import pl.psnc.dl.ege.configuration.EGEConstants;
 import pl.psnc.dl.ege.exception.ConverterException;
-import pl.psnc.dl.ege.types.ConversionActionArguments;
+import pl.psnc.dl.ege.types.Conversion;
 import pl.psnc.dl.ege.utils.IOResolver;
 
 /**
@@ -67,16 +67,16 @@ public class MultiXslConverter implements Converter {
 	/*
 	 * List of possible conversions.
 	 */
-	private List<ConversionActionArguments> possibleConversions = new ArrayList<ConversionActionArguments>();
+	private List<Conversion> possibleConversions = new ArrayList<Conversion>();
 
-    public MultiXslConverter(String name, String xslPath, ConversionActionArguments conversion) {
+    public MultiXslConverter(String name, String xslPath, Conversion conversion) {
         this.name = name;
         this.xslUri = new File(EGEConstants.TEI_STYLESHEETS, xslPath).toURI();
         this.possibleConversions.add(conversion);
     }
 
     public void convert(InputStream inputStream, OutputStream outputStream,
-			ConversionActionArguments conversionDataTypes)
+			Conversion conversionDataTypes)
 			throws ConverterException, IOException {
 		if (!isSupported(conversionDataTypes)) {
 			throw new ConverterException(
@@ -320,12 +320,12 @@ public class MultiXslConverter implements Converter {
 		}
 	}
 
-	public List<ConversionActionArguments> getPossibleConversions() {
+	public List<Conversion> getPossibleConversions() {
 		return possibleConversions;
 	}
 
-	private boolean isSupported(ConversionActionArguments cadtCheck) {
-		for (ConversionActionArguments cadt : possibleConversions) {
+	private boolean isSupported(Conversion cadtCheck) {
+		for (Conversion cadt : possibleConversions) {
 			if (cadt.equals(cadtCheck)) {
 				return true;
 			}

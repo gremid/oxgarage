@@ -21,7 +21,7 @@ import java.util.Map;
  *  
  * @author mariuszs
  */
-public class ConversionActionArguments {
+public class Conversion {
 	
 	private final String propertiesDefinitions;
 	private final DataType inputType;
@@ -39,7 +39,7 @@ public class ConversionActionArguments {
 	 * @param inputType specified input data type
 	 * @param outputType specified output data type
 	 */
-	public ConversionActionArguments(DataType inputType, DataType outputType){
+	public Conversion(DataType inputType, DataType outputType){
 		if(inputType == null || outputType == null){
 			throw new IllegalArgumentException();
 		}
@@ -57,7 +57,7 @@ public class ConversionActionArguments {
 	 * @param outputType specified output data type
 	 * @param propertiesDefinitions definitions of properties
 	 */
-	public ConversionActionArguments(DataType inputType, DataType outputType, String propertiesDefinitions){
+	public Conversion(DataType inputType, DataType outputType, String propertiesDefinitions){
 		if(inputType == null || outputType == null){
 			throw new IllegalArgumentException();
 		}
@@ -81,7 +81,7 @@ public class ConversionActionArguments {
 	 * @param visible specifies whether the input type should be offered
 
 	 */
-	public ConversionActionArguments(DataType inputType, DataType outputType, boolean visible){
+	public Conversion(DataType inputType, DataType outputType, boolean visible){
 		if(inputType == null || outputType == null){
 			throw new IllegalArgumentException();
 		}
@@ -100,7 +100,7 @@ public class ConversionActionArguments {
 	 * @param propertiesDefinitions definitions of properties
 	 * @param visible specifies whether the input type should be offered
 	 */
-	public ConversionActionArguments(DataType inputType, DataType outputType, String propertiesDefinitions, boolean visible){
+	public Conversion(DataType inputType, DataType outputType, String propertiesDefinitions, boolean visible){
 		if(inputType == null || outputType == null){
 			throw new IllegalArgumentException();
 		}
@@ -126,7 +126,7 @@ public class ConversionActionArguments {
 	 * @param visible specifies whether the input type should be offered
 	 * @param cost specifies the cost of using the conversion
 	 */
-	public ConversionActionArguments(DataType inputType, DataType outputType, boolean visible, int cost){
+	public Conversion(DataType inputType, DataType outputType, boolean visible, int cost){
 		if(inputType == null || outputType == null){
 			throw new IllegalArgumentException();
 		}
@@ -147,7 +147,7 @@ public class ConversionActionArguments {
 	 * @param propertiesDefinitions definitions of properties
 	 * @param visible specifies whether the input type should be offered
 	 */
-	public ConversionActionArguments(DataType inputType, DataType outputType, String propertiesDefinitions, boolean visible, int cost){
+	public Conversion(DataType inputType, DataType outputType, String propertiesDefinitions, boolean visible, int cost){
 		if(inputType == null || outputType == null){
 			throw new IllegalArgumentException();
 		}
@@ -244,10 +244,10 @@ public class ConversionActionArguments {
 		if (o == null) {
 			return false;
 		}
-		if (!(o instanceof ConversionActionArguments)) {
+		if (!(o instanceof Conversion)) {
 			return false;
 		}
-		ConversionActionArguments ca = (ConversionActionArguments) o;
+		Conversion ca = (Conversion) o;
 		if (ca.getInputType() != null
 				&& ca.getInputType().equals(this.inputType)
 				&& ca.getOutputType() != null && ca.getOutputType().equals(this.outputType)) {

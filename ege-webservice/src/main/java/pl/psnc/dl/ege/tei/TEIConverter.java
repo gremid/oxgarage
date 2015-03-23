@@ -42,7 +42,7 @@ import pl.psnc.dl.ege.Converter;
 import pl.psnc.dl.ege.configuration.EGEConfigurationManager;
 import pl.psnc.dl.ege.configuration.EGEConstants;
 import pl.psnc.dl.ege.exception.ConverterException;
-import pl.psnc.dl.ege.types.ConversionActionArguments;
+import pl.psnc.dl.ege.types.Conversion;
 import pl.psnc.dl.ege.types.DataType;
 import pl.psnc.dl.ege.utils.EGEIOUtils;
 import pl.psnc.dl.ege.utils.IOResolver;
@@ -129,14 +129,14 @@ public class TEIConverter implements Converter, ErrorHandler {
 		LOGGER.info("Warning: " + exception.getMessage());
 	}
 	public void convert(InputStream inputStream, OutputStream outputStream,
-			final ConversionActionArguments conversionDataTypes)
+			final Conversion conversionDataTypes)
 			throws ConverterException, IOException {
 		boolean found = false;
 
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date date = new Date();
 		try {
-			for (ConversionActionArguments cadt : ConverterConfiguration.CONVERSIONS) {
+			for (Conversion cadt : ConverterConfiguration.CONVERSIONS) {
 				if (conversionDataTypes.equals(cadt)) {
 					String profile = cadt.getProperties().get(
 							ConverterConfiguration.PROFILE_KEY);
@@ -1021,8 +1021,8 @@ public class TEIConverter implements Converter, ErrorHandler {
 						+ File.separator + direction + ".xsl")));
 	}
 
-	public List<ConversionActionArguments> getPossibleConversions() {
-		return (List<ConversionActionArguments>) ConverterConfiguration.CONVERSIONS;
+	public List<Conversion> getPossibleConversions() {
+		return (List<Conversion>) ConverterConfiguration.CONVERSIONS;
 	}
 
     @Override

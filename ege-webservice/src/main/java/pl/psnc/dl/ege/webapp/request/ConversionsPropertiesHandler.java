@@ -124,7 +124,7 @@ public class ConversionsPropertiesHandler
 	public void applyPathProperties(ConversionsPath cp) throws RequestResolvingException
 	{
 		for (int i = 0; i < cp.getPath().size(); i++) {
-			cp.getPath().get(i).getConversionActionArguments().setProperties(
+			cp.getPath().get(i).getConversion().setProperties(
 				properties.get(i));
 		}
 	}

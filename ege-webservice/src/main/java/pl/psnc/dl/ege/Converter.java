@@ -6,7 +6,7 @@ import java.io.OutputStream;
 import java.util.List;
 
 import pl.psnc.dl.ege.exception.ConverterException;
-import pl.psnc.dl.ege.types.ConversionActionArguments;
+import pl.psnc.dl.ege.types.Conversion;
 
 /**
  * <p>Main interface of EGE Converter.</p> 
@@ -17,7 +17,7 @@ import pl.psnc.dl.ege.types.ConversionActionArguments;
  * (e.g. removing redundant information).</p>
  * 
  * <p>Each {@link Converter} can perform conversion of data based on 
- * its list of {@link ConversionActionArguments}. Each ConversionActionArguments specifies one input data type - from which
+ * its list of {@link pl.psnc.dl.ege.types.Conversion}. Each ConversionActionArguments specifies one input data type - from which
  * we can convert and one output data type - to which we can convert from input data type.
  * E.g. Having {@link ConvertionActionArguments} which contains input data type of : ENRICH TEI P5 (text/xml) and
  * output data type : ENRICH TEI P5 (application/msword), we can perform conversion from ENRICH TEI P5(text/xml)
@@ -44,16 +44,16 @@ public interface Converter {
 	 * @throws ConverterException if an error occurred during convert operation.   
 	 * @throws IOException
 	 */
-	public void convert(InputStream inputStream, OutputStream outputStream, ConversionActionArguments conversionDataTypes) throws ConverterException, IOException;
+	public void convert(InputStream inputStream, OutputStream outputStream, Conversion conversionDataTypes) throws ConverterException, IOException;
 	
 	/**
-	 * Returns all supported convert configurations: as {@link ConversionActionArguments}.
-	 * Each {@link ConversionActionArguments} specifies from which <code>DataType</code> to
+	 * Returns all supported convert configurations: as {@link pl.psnc.dl.ege.types.Conversion}.
+	 * Each {@link pl.psnc.dl.ege.types.Conversion} specifies from which <code>DataType</code> to
 	 * which {@link DataType} we can convert.
 	 * 
-	 * @return list of {@link ConversionActionArguments}
+	 * @return list of {@link pl.psnc.dl.ege.types.Conversion}
 	 */
-	public List<ConversionActionArguments> getPossibleConversions();
+	public List<Conversion> getPossibleConversions();
 	
 	
 

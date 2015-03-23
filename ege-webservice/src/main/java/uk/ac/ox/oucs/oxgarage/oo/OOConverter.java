@@ -18,7 +18,7 @@ import pl.psnc.dl.ege.Converter;
 import pl.psnc.dl.ege.configuration.EGEConfigurationManager;
 import pl.psnc.dl.ege.configuration.EGEConstants;
 import pl.psnc.dl.ege.exception.ConverterException;
-import pl.psnc.dl.ege.types.ConversionActionArguments;
+import pl.psnc.dl.ege.types.Conversion;
 import pl.psnc.dl.ege.types.DataType;
 import pl.psnc.dl.ege.utils.EGEIOUtils;
 import pl.psnc.dl.ege.utils.IOResolver;
@@ -72,7 +72,7 @@ public class OOConverter implements Converter {
 	}
 
 	public void convert(InputStream inputStream, OutputStream outputStream,
-			final ConversionActionArguments conversionDataTypes)
+			final Conversion conversionDataTypes)
 			throws ConverterException, IOException {
 		try {
 			transform(inputStream, outputStream, conversionDataTypes.getInputType(),  conversionDataTypes.getOutputType());
@@ -82,7 +82,7 @@ public class OOConverter implements Converter {
 		}
 	}	
 
-	public List<ConversionActionArguments> getPossibleConversions() {
+	public List<Conversion> getPossibleConversions() {
 		return OOConfiguration.CONVERSIONS;
 	}
 

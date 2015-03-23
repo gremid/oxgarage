@@ -11,7 +11,7 @@ import pl.psnc.dl.ege.exception.ConverterException;
  * Converter action class is a base for nodes of convert graph - each action
  * describes that it is possible to use referenced converter to convert from
  * chosen input format to chosen output format. <br/><br/>
- * Input formats are contained within {@link ConversionActionArguments}.<br/><br/>
+ * Input formats are contained within {@link Conversion}.<br/><br/>
  * Each instance should contain reference to converter and one action point with
  * specified input and output formats.
  * 
@@ -19,23 +19,23 @@ import pl.psnc.dl.ege.exception.ConverterException;
  */
 public class ConversionAction {
 	
-	private final ConversionActionArguments conversionActionArguments;
+	private final Conversion conversion;
 	private final Converter converter;
 
 	/**
 	 * Constructor with basic parameters: convertionActionArguments and
 	 * reference to converter.
 	 * 
-	 * @param conversionActionArguments arguments for conversion action
+	 * @param conversion arguments for conversion action
 	 * @param converter implementation of {@link Converter} interface 
 	 */
 	public ConversionAction(
-			ConversionActionArguments conversionActionArguments,
+			Conversion conversion,
 			Converter converter) {
-		if(conversionActionArguments == null || converter == null){
+		if(conversion == null || converter == null){
 			throw new IllegalArgumentException();
 		}
-		this.conversionActionArguments = conversionActionArguments;
+		this.conversion = conversion;
 		this.converter = converter;
 	}
 	
@@ -58,7 +58,7 @@ public class ConversionAction {
 	 */
 	public void convert(InputStream inputStream, OutputStream outputStream)
 			throws ConverterException, IOException {
-		converter.convert(inputStream, outputStream, conversionActionArguments);
+		converter.convert(inputStream, outputStream, conversion);
 	}
 
 	/**
@@ -66,8 +66,8 @@ public class ConversionAction {
 	 * 
 	 * @return conversion action arguments.
 	 */
-	public ConversionActionArguments getConversionActionArguments() {
-		return conversionActionArguments;
+	public Conversion getConversion() {
+		return conversion;
 	}
 
 	/**
@@ -76,8 +76,8 @@ public class ConversionAction {
 	 * @return input {@link DataType}
 	 */
 	public DataType getConversionInputType() {
-		return (conversionActionArguments == null ? null
-				: conversionActionArguments.getInputType());
+		return (conversion == null ? null
+				: conversion.getInputType());
 	}
 
 	/**
@@ -86,8 +86,8 @@ public class ConversionAction {
 	 * @return output {@link DataType}
 	 */
 	public DataType getConversionOutputType() {
-		return (conversionActionArguments == null ? null
-				: conversionActionArguments.getOutputType());
+		return (conversion == null ? null
+				: conversion.getOutputType());
 	}
 
 	/**
@@ -97,7 +97,7 @@ public class ConversionAction {
 	 * @return cost
 	 */
 	public int getCost() {
-		return conversionActionArguments.getCost();
+		return conversion.getCost();
 	}
 
 	/**
@@ -120,9 +120,9 @@ public class ConversionAction {
 		ConversionAction ca = (ConversionAction) o;
 		if (ca.getConverter() != null
 				&& ca.getConverter().equals(this.getConverter())) {
-			if (ca.getConversionActionArguments() != null
-					&& ca.getConversionActionArguments().equals(
-							this.getConversionActionArguments())) {
+			if (ca.getConversion() != null
+					&& ca.getConversion().equals(
+							this.getConversion())) {
 				return true;
 			}
 		}
@@ -133,8 +133,8 @@ public class ConversionAction {
 	public int hashCode() {
 		int hashCode = 7;
 		hashCode = hashCode
-				+ (this.conversionActionArguments == null ? 0
-						: this.conversionActionArguments.hashCode());
+				+ (this.conversion == null ? 0
+						: this.conversion.hashCode());
 		hashCode = hashCode
 				+ (this.converter == null ? 0 : this.converter.hashCode());
 		return hashCode;
@@ -142,6 +142,6 @@ public class ConversionAction {
 
 	@Override
 	public String toString() {
-        return conversionActionArguments.toString() + "(" + converter.toString() + ")";
+        return conversion.toString() + "(" + converter.toString() + ")";
 	}
 }

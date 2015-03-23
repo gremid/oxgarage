@@ -20,7 +20,6 @@ import pl.psnc.dl.ege.exception.ConverterException;
 import pl.psnc.dl.ege.exception.EGEException;
 import pl.psnc.dl.ege.exception.ValidatorException;
 import pl.psnc.dl.ege.types.ConversionAction;
-import pl.psnc.dl.ege.types.ConversionActionArguments;
 import pl.psnc.dl.ege.types.ConversionsPath;
 import pl.psnc.dl.ege.types.DataType;
 import pl.psnc.dl.ege.types.ValidationResult;
@@ -44,72 +43,39 @@ public class EGEImpl implements EGE, ExceptionListener {
 	/*
 	 * Contains last thrown exception from ConversionPerformer thread.
 	 */
-	private List<Exception> exceptions = new LinkedList<Exception>();
+	private List<Exception> exceptions = new LinkedList<>();
 
-	/*
-	 * Reference to singleton - extension manager.
-	 */
-	private EGEConfigurationManager em;
-
-	/*
-	 * List of available validator plugins : loaded through extension manager.
-	 */
+    /*
+     * List of available validator plugins : loaded through extension manager.
+     */
 	private List<Validator> validators;
 
-	/*
-	 * List of available converter plugins : loaded through extension manager.
-	 */
-	private List<Converter> converters;
-
-	/*
-	 * Directed graph of connections between available converter plugins.
-	 */
+    /*
+     * Directed graph of connections between available converter plugins.
+     */
 	private final Graph<ConversionAction, Integer> graph = new DirectedSparseMultigraph<ConversionAction, Integer>();
 
 	/**
 	 * Default Constructor : initializes basic structures.
 	 */
-	public EGEImpl()
-	{
-		initialize();
-	}
+	public EGEImpl() {
+        EGEConfigurationManager em = EGEConfigurationManager.getInstance();
+        List<Converter> converters = em.getAvailableConverters();
+        this.validators = em.getAvailableValidators();
 
+        final Set<ConversionAction> nodes = new HashSet<ConversionAction>();
+        converters.stream().forEach(conv -> conv.getPossibleConversions().stream().map(ac -> new ConversionAction(ac, conv)).forEach(nodes::add));
 
-	/*
-	 * Basic initialization : reading list of available converter plugins and
-	 * creation of converters graph.
-	 */
-	private void initialize()
-	{
-		em = EGEConfigurationManager.getInstance();
-		this.converters = em.getAvailableConverters();
-		this.validators = em.getAvailableValidators();
-		int size = converters.size();
-		Set<ConversionAction> nodes = new HashSet<ConversionAction>();
-		for (int i = 0; i < size; i++) {
-			Converter conv = converters.get(i);
-			for (ConversionActionArguments ac : conv.getPossibleConversions()) {
-				ConversionAction ca = new ConversionAction(ac, conv);
-				nodes.add(ca);
-			}
-		}
-		size = nodes.size();
-		List<ConversionAction> nodesList = new ArrayList<ConversionAction>(
-				nodes);
-		int index = 0;
-		for (int i = 0; i < size; i++) {
-			ConversionAction ca = nodesList.get(i);
-			graph.addVertex(ca);
-			for (int j = 0; j < size; j++) {
-				ConversionAction sca = nodesList.get(j);
-				if (ca.getConversionOutputType().equals(
-					sca.getConversionInputType())) {
-					graph.addEdge(index, ca, sca);
-					index++;
-				}
-			}
-		}
-	}
+        int index = 0;
+        for (ConversionAction ca : nodes) {
+            graph.addVertex(ca);
+            for (ConversionAction sca : nodes) {
+                if (ca.getConversionOutputType().equals(sca.getConversionInputType())) {
+                    graph.addEdge(index++, ca, sca);
+                }
+            }
+        }
+    }
 
 
 	/**
@@ -127,8 +93,7 @@ public class EGEImpl implements EGE, ExceptionListener {
 		List<ConversionAction> startNodes = getStartNodes(sourceDataType);
 		List<ConversionsPath> paths = new ArrayList<ConversionsPath>();
 		for (ConversionAction ca : startNodes) {
-			expandPathsSet(new ConversionsPath(
-					new ArrayList<ConversionAction>()), ca, paths, null);
+			expandPathsSet(new ConversionsPath(new ArrayList<>()), ca, paths, null);
 		}
 		Collections.sort(paths);	
 		return paths;
@@ -287,7 +252,7 @@ public class EGEImpl implements EGE, ExceptionListener {
 		// sort alphabetically (to keep the documents from same family together)
 		Set<DataType> inputTypes = new TreeSet<DataType>();
 		for (ConversionAction ca : graph.getVertices()) {
-			if(ca.getConversionActionArguments().getVisible()) inputTypes.add(ca.getConversionInputType());
+			if(ca.getConversion().getVisible()) inputTypes.add(ca.getConversionInputType());
 		}
 		return inputTypes;
 	}

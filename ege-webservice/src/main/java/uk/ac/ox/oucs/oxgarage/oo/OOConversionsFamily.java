@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import pl.psnc.dl.ege.types.DataType;
-import pl.psnc.dl.ege.types.ConversionActionArguments;
+import pl.psnc.dl.ege.types.Conversion;
 import pl.psnc.dl.ege.configuration.EGEConstants;
 
 /**
@@ -73,14 +73,14 @@ public class OOConversionsFamily {
 		outputs = new ArrayList<OOType>();
 	}
 
-	public void addConversions(List<ConversionActionArguments> conversions) {
+	public void addConversions(List<Conversion> conversions) {
 		int cost;
 		for (OOType in : inputs) {
 			for(OOType out : outputs) {
 				if(!in.equals(out)) {
 					cost = in.cost + out.cost;
 					//LOGGER.debug(in.type.toString() + " -> " + out.type.toString() + ": " + cost);
-					conversions.add(new ConversionActionArguments(in.type, out.type, "", true, cost));
+					conversions.add(new Conversion(in.type, out.type, "", true, cost));
 				}
 			}
 		}
