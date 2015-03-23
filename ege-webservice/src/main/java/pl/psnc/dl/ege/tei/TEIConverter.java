@@ -16,10 +16,9 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
-import java.util.zip.ZipFile;
+import java.util.zip.ZipEntry;
 
 import java.util.zip.ZipOutputStream;
-import java.io.BufferedOutputStream;
 
 import javax.xml.transform.stream.StreamSource;
 
@@ -43,7 +42,6 @@ import pl.psnc.dl.ege.EGEConstants;
 import pl.psnc.dl.ege.exception.ConverterException;
 import pl.psnc.dl.ege.types.Conversion;
 import pl.psnc.dl.ege.types.DataType;
-import pl.psnc.dl.ege.utils.EGEIOUtils;
 
 
 import com.thaiopensource.relaxng.edit.SchemaCollection;
@@ -64,7 +62,7 @@ import javax.xml.transform.TransformerException;
 
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
-import pl.psnc.dl.ege.utils.ZipStreams;
+import pl.psnc.dl.ege.io.ZipStreams;
 
 /**
  * <p>
@@ -483,15 +481,16 @@ public class TEIConverter implements Converter, ErrorHandler {
 	 */
 	private void prepareImages(File imageDir) throws IOException {
 		File sFile = searchForData(imageDir, "^.*\\.((?i)zip)$");
-		ZipFile zipFile = null;
-		File zipOutputDir = null;
 		while (sFile!=null) {
-			try { 
-				zipFile = new ZipFile(sFile);
-				
-				zipOutputDir = new File(imageDir + File.separator + sFile.getName().replace('.', '-') + File.separator);
+			try {
+
+                final File zipOutputDir = new File(imageDir + File.separator + sFile.getName().replace('.', '-') + File.separator);
 				zipOutputDir.mkdir();
-				EGEIOUtils.unzipFile(zipFile, zipOutputDir);
+
+                try (FileInputStream zipStream = new FileInputStream(sFile)) {
+                    ZipStreams.unzip(zipStream, zipOutputDir);
+                }
+
 				sFile.delete();
 				sFile = searchForData(imageDir, "^.*\\.((?i)zip)$");
 			}
@@ -557,9 +556,9 @@ public class TEIConverter implements Converter, ErrorHandler {
 				// do nothing
 			}
 			if (outTempDir != null && outTempDir.exists())
-				EGEIOUtils.deleteDirectory(outTempDir);
+				EGEConstants.deleteDirectory(outTempDir);
 			if (inTmpDir != null && inTmpDir.exists())
-				EGEIOUtils.deleteDirectory(inTmpDir);
+				EGEConstants.deleteDirectory(inTmpDir);
 			}
 	}
 
@@ -652,9 +651,9 @@ public class TEIConverter implements Converter, ErrorHandler {
 				// do nothing
 			}
 			if (outTempDir != null && outTempDir.exists())
-				EGEIOUtils.deleteDirectory(outTempDir);
+				EGEConstants.deleteDirectory(outTempDir);
 			if (inTmpDir != null && inTmpDir.exists())
-				EGEIOUtils.deleteDirectory(inTmpDir);
+				EGEConstants.deleteDirectory(inTmpDir);
 		}
 
 	}
@@ -712,7 +711,7 @@ public class TEIConverter implements Converter, ErrorHandler {
 				}
 			}
 			if (tmpDir != null) {
-				EGEIOUtils.deleteDirectory(tmpDir);
+				EGEConstants.deleteDirectory(tmpDir);
 			}
 			if(xlsX != null){
 				xlsX.cleanUp();
@@ -750,7 +749,7 @@ public class TEIConverter implements Converter, ErrorHandler {
 				}
 			}
 			if (tmpDir != null) {
-				EGEIOUtils.deleteDirectory(tmpDir);
+				EGEConstants.deleteDirectory(tmpDir);
 			}
 			if(docX != null){
 				docX.cleanUp();
@@ -783,7 +782,7 @@ public class TEIConverter implements Converter, ErrorHandler {
 			File oDocXFile = new File(outTmpDir.getAbsolutePath() + File.separator + "result.docx");
 			fos = new FileOutputStream(oDocXFile);
 			// pack directory to final DocX file
-			docX.zipToStream(fos, new File(docX.getDirectoryName()));
+            ZipStreams.zip(new File(docX.getDirectoryName()), fos);
 			// double compress DocX file anyway
 			ZipStreams.zip(outTmpDir, os);
 			// clean temporary files
@@ -804,8 +803,8 @@ public class TEIConverter implements Converter, ErrorHandler {
 			if(docX != null){
 				docX.cleanUp();
 			}
-			EGEIOUtils.deleteDirectory(inTmpDir);
-			EGEIOUtils.deleteDirectory(outTmpDir);
+			EGEConstants.deleteDirectory(inTmpDir);
+			EGEConstants.deleteDirectory(outTmpDir);
 		}
 	}
 
@@ -837,7 +836,7 @@ public class TEIConverter implements Converter, ErrorHandler {
 				}
 			}
 			if (tmpDir != null) {
-				EGEIOUtils.deleteDirectory(tmpDir);
+				EGEConstants.deleteDirectory(tmpDir);
 			}
 			if(odt != null){
 				odt.cleanUp();
@@ -867,7 +866,7 @@ public class TEIConverter implements Converter, ErrorHandler {
 			File oOdtFile = new File(outTmpDir.getAbsolutePath() + File.separator + "result.odt");
 			fos = new FileOutputStream(oOdtFile);
 			// pack directory to final Odt file
-			odt.zipToStream(fos, new File(odt.getDirectoryName()));
+			ZipStreams.zip(new File(odt.getDirectoryName()), fos);
 			// double compress Odt file anyway
 			ZipStreams.zip(outTmpDir, os);
 			// clean temporary files
@@ -888,8 +887,8 @@ public class TEIConverter implements Converter, ErrorHandler {
 			if(odt != null){
 				odt.cleanUp();
 			}
-			EGEIOUtils.deleteDirectory(inTmpDir);
-			EGEIOUtils.deleteDirectory(outTmpDir);
+			EGEConstants.deleteDirectory(inTmpDir);
+			EGEConstants.deleteDirectory(outTmpDir);
 		}
 	}
 
@@ -933,17 +932,22 @@ public class TEIConverter implements Converter, ErrorHandler {
 			File oEpubFile = new File(outputDir.getAbsolutePath() + File.separator + "result.epub");
 			fos = new FileOutputStream(oEpubFile);
 			// pack directory to final Epub file
-			ZipOutputStream zipOs = new ZipOutputStream(
-				new BufferedOutputStream(fos));
+
 			// zip it with mimetype on first position and uncompressed
-			try {
-			    File mimetype = new File(outTempDir + File.separator + "mimetype");
-			    EGEIOUtils.constructZip(outTempDir, zipOs, "", mimetype);
+			try (ZipOutputStream zipOs = new ZipOutputStream(fos)) {
+                // see http://stackoverflow.com/a/7063166
+                final byte[] content = "application/epub+zip".getBytes("UTF-8");
+                final ZipEntry entry = new ZipEntry("mimetype");
+                entry.setMethod(ZipEntry.STORED);
+                entry.setSize(20);
+                entry.setCompressedSize(20);
+                entry.setCrc(0x2CAB616F); // pre-computed
+                zipOs.putNextEntry(entry);
+                zipOs.write(content);
+                zipOs.closeEntry();
+
+                ZipStreams.zipTree(outTempDir.toPath(), zipOs);
 			}
-			finally 
-			    {
-				zipOs.close();
-			    }
 			// double compress epub file anyway
 			ZipStreams.zip(outputDir, outputStream);
 			// clean temporary files
@@ -962,11 +966,11 @@ public class TEIConverter implements Converter, ErrorHandler {
 				}
 			}
 			if (outTempDir != null && outTempDir.exists())
-				EGEIOUtils.deleteDirectory(outTempDir);
+				EGEConstants.deleteDirectory(outTempDir);
 			if (inTmpDir != null && inTmpDir.exists())
-				EGEIOUtils.deleteDirectory(inTmpDir);
+				EGEConstants.deleteDirectory(inTmpDir);
 			if (outputDir != null && outputDir.exists())
-				EGEIOUtils.deleteDirectory(outputDir);
+				EGEConstants.deleteDirectory(outputDir);
 		}
 	}
 

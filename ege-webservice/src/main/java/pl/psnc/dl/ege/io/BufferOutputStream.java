@@ -1,11 +1,11 @@
-package pl.psnc.dl.ege.utils;
+package pl.psnc.dl.ege.io;
 
 import java.io.File;
 import java.io.IOException;
 
 import org.apache.commons.io.output.DeferredFileOutputStream;
 
-import pl.psnc.dl.ege.utils.DataBuffer.Item;
+import pl.psnc.dl.ege.io.DataBuffer.Item;
 
 
 /*

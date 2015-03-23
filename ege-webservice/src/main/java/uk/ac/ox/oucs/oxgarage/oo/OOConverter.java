@@ -19,8 +19,7 @@ import pl.psnc.dl.ege.EGEConstants;
 import pl.psnc.dl.ege.exception.ConverterException;
 import pl.psnc.dl.ege.types.Conversion;
 import pl.psnc.dl.ege.types.DataType;
-import pl.psnc.dl.ege.utils.EGEIOUtils;
-import pl.psnc.dl.ege.utils.ZipStreams;
+import pl.psnc.dl.ege.io.ZipStreams;
 
 /**
  * <p>
@@ -169,8 +168,8 @@ public class OOConverter implements Converter {
 			}
 			ZipStreams.zip(outTmpDir, outputStream);
 		} finally {
-			EGEIOUtils.deleteDirectory(inTmpDir);
-			EGEIOUtils.deleteDirectory(outTmpDir);
+			EGEConstants.deleteDirectory(inTmpDir);
+			EGEConstants.deleteDirectory(outTmpDir);
 		}
 	}
 

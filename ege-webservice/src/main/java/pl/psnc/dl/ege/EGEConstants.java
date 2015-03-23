@@ -1,6 +1,12 @@
 package pl.psnc.dl.ege;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Optional;
 
 /**
@@ -52,4 +58,34 @@ public final class EGEConstants {
 		if(typeCode.equals(PRESENTATIONFAMILYCODE)) return PRESENTATIONFAMILY;
 		return DEFAULTFAMILY;
 	}
+
+    /**
+     * Deletes a directory.
+     *
+     * @param dir
+     *            The directory to delete
+     * @return Returns true on success.
+     */
+    public static void deleteDirectory(File dir) throws IOException {
+if (!dir.isDirectory()) {
+throw new IllegalArgumentException(dir.toString());
+}
+Files.walkFileTree(dir.toPath(), new SimpleFileVisitor<Path>() {
+    @Override
+    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+        Files.delete(file);
+        return FileVisitResult.CONTINUE;
+    }
+
+    @Override
+    public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+        if (exc == null) {
+            Files.delete(dir);
+            return FileVisitResult.CONTINUE;
+        } else {
+            throw exc;
+        }
+    }
+});
+}
 }

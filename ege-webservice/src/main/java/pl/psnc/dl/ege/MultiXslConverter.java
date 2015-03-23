@@ -29,10 +29,9 @@ import net.sf.saxon.s9api.QName;
 import org.xml.sax.SAXNotRecognizedException;
 import org.xml.sax.SAXNotSupportedException;
 
-import pl.psnc.dl.ege.utils.EGEIOUtils;
 import pl.psnc.dl.ege.exception.ConverterException;
 import pl.psnc.dl.ege.types.Conversion;
-import pl.psnc.dl.ege.utils.ZipStreams;
+import pl.psnc.dl.ege.io.ZipStreams;
 
 /**
  * <p>
@@ -99,9 +98,9 @@ public class MultiXslConverter implements Converter {
 			throw new ConverterException(ex.getMessage());
 		} finally {
 			if (inTempDir != null && inTempDir.exists())
-				EGEIOUtils.deleteDirectory(inTempDir);
+				EGEConstants.deleteDirectory(inTempDir);
 			if (outTempDir != null && outTempDir.exists())
-				EGEIOUtils.deleteDirectory(outTempDir);
+				EGEConstants.deleteDirectory(outTempDir);
 		}
 	}
 
@@ -310,7 +309,7 @@ public class MultiXslConverter implements Converter {
 				is.close();
 			}
 			if (inTmpDir != null && inTmpDir.exists())
-				EGEIOUtils.deleteDirectory(inTmpDir);
+				EGEConstants.deleteDirectory(inTmpDir);
 			inputStream.close();
 		}
 	}

@@ -1,5 +1,6 @@
 package pl.psnc.dl.ege.webapp.servlet;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
@@ -16,8 +18,9 @@ import java.util.TreeSet;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
-import java.util.zip.ZipFile;
+import java.util.zip.ZipInputStream;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -40,9 +43,8 @@ import pl.psnc.dl.ege.types.ConversionAction;
 import pl.psnc.dl.ege.types.ConversionsPath;
 import pl.psnc.dl.ege.types.DataType;
 import pl.psnc.dl.ege.types.ValidationResult;
-import pl.psnc.dl.ege.utils.DataBuffer;
-import pl.psnc.dl.ege.utils.EGEIOUtils;
-import pl.psnc.dl.ege.utils.ZipStreams;
+import pl.psnc.dl.ege.io.DataBuffer;
+import pl.psnc.dl.ege.io.ZipStreams;
 import pl.psnc.dl.ege.webapp.config.LabelProvider;
 import pl.psnc.dl.ege.webapp.config.MimeExtensionProvider;
 import pl.psnc.dl.ege.webapp.request.ConversionRequestResolver;
@@ -439,40 +441,50 @@ public class ConversionServlet extends HttpServlet {
 		} finally {
 		    fos.close();
 		}
-		boolean isComplex = EGEIOUtils
-		    .isComplexZip(szipFile);
-		response.setContentType(APPLICATION_OCTET_STREAM);
-		if (isComplex) {
+
+        response.setContentType(APPLICATION_OCTET_STREAM);
+		if (!ZipStreams.hasSingleFileEntry(szipFile)) {
 		    String fileExt;
 		    if (cpath.getOutputDataType().getMimeType()
 			.equals(APPLICATION_MSWORD)) {
 			fileExt = DOCX_EXT;
 		    } else if (cpath.getOutputDataType().getMimeType()
 			       .equals(APPLICATION_EPUB)) {
-			fileExt = EPUB_EXT; 
+			fileExt = EPUB_EXT;
 		    } else if (cpath.getOutputDataType().getMimeType()
 			       .equals(APPLICATION_ODT)) {
-			fileExt = ODT_EXT; 
+			fileExt = ODT_EXT;
 		    }else {
 			fileExt = ZIP_EXT;
 		    }
-		    response.setHeader("Content-Disposition",
-				       "attachment; filename=\"" + fname + fileExt + "\"");
-		    FileInputStream fis = new FileInputStream(
-							      szipFile);
-		    os = response.getOutputStream();
-		    try {
-			EGEIOUtils.copyStream(fis, os);
-		    } finally {
-			fis.close();
-		    }
+		    response.setHeader("Content-Disposition", "attachment; filename=\"" + fname + fileExt + "\"");
+            Files.copy(szipFile.toPath(), os = response.getOutputStream());
 		} else {
-		    String fileExt = getMimeExtensionProvider()
-			.getFileExtension(cpath.getOutputDataType().getMimeType());
-		    response.setHeader("Content-Disposition",
-				       "attachment; filename=\"" + fname + fileExt + "\"");
-		    os = response.getOutputStream();
-		    EGEIOUtils.unzipSingleFile(new ZipFile(szipFile), os);
+		    final String fileExt = getMimeExtensionProvider().getFileExtension(cpath.getOutputDataType().getMimeType());
+		    response.setHeader("Content-Disposition", "attachment; filename=\"" + fname + fileExt + "\"");
+
+            try (ZipInputStream zipIn = new ZipInputStream(new BufferedInputStream(new FileInputStream(szipFile)))) {
+                while (true) {
+                    final ZipEntry entry = zipIn.getNextEntry();
+                    if (entry == null) {
+                        break;
+                    }
+                    if (entry.isDirectory()) {
+                        continue;
+                    }
+
+                    os = response.getOutputStream();
+                    final byte[] buf = new byte[8192];
+                    while (true) {
+                        final int read = zipIn.read(buf);
+                        if (read == -1) {
+                            break;
+                        }
+                        os.write(buf, 0, read);
+                    }
+                    break;
+                }
+            }
 		}
 	    } finally {
 		ins.close();

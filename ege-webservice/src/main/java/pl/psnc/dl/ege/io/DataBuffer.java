@@ -1,4 +1,4 @@
-package pl.psnc.dl.ege.utils;
+package pl.psnc.dl.ege.io;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -304,8 +304,12 @@ public class DataBuffer
 		public void deleteDir(){
 			if (!os.isInMemory()) {
 				if(tmpDir.exists()){
-					EGEIOUtils.deleteDirectory(tmpDir);
-				}
+                    try {
+                        EGEConstants.deleteDirectory(tmpDir);
+                    } catch (IOException e) {
+                        // ignored
+                    }
+                }
 			}
 		}
 		

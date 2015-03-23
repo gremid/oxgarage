@@ -1,6 +1,5 @@
 package pl.psnc.dl.ege.tei;
 
-import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,7 +11,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.UUID;
-import java.util.zip.ZipOutputStream;
 
 import javax.xml.transform.stream.StreamSource;
 
@@ -32,8 +30,8 @@ import org.tei.utils.FileUtils;
 import org.tei.utils.SaxonProcFactory;
 import org.tei.utils.XMLUtils;
 
-import pl.psnc.dl.ege.utils.EGEIOUtils;
 import pl.psnc.dl.ege.EGEConstants;
+import pl.psnc.dl.ege.io.ZipStreams;
 
 /**
  * <p>
@@ -225,9 +223,9 @@ public abstract class ComplexConverter {
 				}
 			}
 			// pack tmp dir to zip and send it to output stream.
-			zipToStream(os, tmpArchiveDir);
+			ZipStreams.zip(tmpArchiveDir, os);
 		} finally {
-			EGEIOUtils.deleteDirectory(tmpArchiveDir);
+			EGEConstants.deleteDirectory(tmpArchiveDir);
 		}
 	}
 
@@ -284,25 +282,15 @@ public abstract class ComplexConverter {
 	    }
 	}
 
-	/**
-	 * Packs selected directory into streamed zip archive.
-	 * 
-	 * @param os
-	 * @param dir
-	 * @throws IOException
-	 */
-	public void zipToStream(OutputStream os, File dir) throws IOException {
-		ZipOutputStream zipOs = new ZipOutputStream(
-				new BufferedOutputStream(os));
-		EGEIOUtils.constructZip(dir, zipOs, "");
-		zipOs.close();
-	}
-
 	public void cleanUp() {
 		// delete temporary dir
-		EGEIOUtils.deleteDirectory(tempDirectory);
+        try {
+            EGEConstants.deleteDirectory(tempDirectory);
+        } catch (IOException e) {
+            // ignored
+        }
 
-		// delete zip file
+        // delete zip file
 		if (null != zipFile && zipFile.exists())
 			zipFile.delete();
 
