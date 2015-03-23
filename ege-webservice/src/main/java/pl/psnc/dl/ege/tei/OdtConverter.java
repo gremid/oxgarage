@@ -13,6 +13,7 @@ import net.sf.saxon.s9api.SaxonApiException;
 import net.sf.saxon.s9api.XsltTransformer;
 
 import org.tei.exceptions.ConfigurationException;
+import pl.psnc.dl.ege.configuration.EGEConstants;
 
 /**
  * <p>
@@ -55,7 +56,7 @@ public class OdtConverter extends ComplexConverter {
 	 * Returns path to the template file
 	 */
 	protected String getTemplateFile() {
-		return new File(ConverterConfiguration.STYLESHEETS_PATH).toString() + File.separator
+		return EGEConstants.TEI_STYLESHEETS.toString() + File.separator
 						+ "profiles" + File.separator
 						+ profile + File.separator
 						+ Format.ODT.getId() + File.separator 
@@ -87,7 +88,7 @@ public class OdtConverter extends ComplexConverter {
 	 * Returns stylesheet for conversion into TEI
 	 */
 	protected StreamSource getStylesheetToTEI() {
-		String stylesheet = new File(ConverterConfiguration.STYLESHEETS_PATH).toString() + File.separator
+		String stylesheet = EGEConstants.TEI_STYLESHEETS.toString() + File.separator
 						+ "profiles" + File.separator
 						+ profile + File.separator
 						+ Format.ODT.getId() + File.separator 
@@ -99,7 +100,7 @@ public class OdtConverter extends ComplexConverter {
 	 * Returns stylesheet for conversion from TEI
 	 */
 	protected StreamSource getStylesheetFromTEI() {
-		String stylesheet = new File(ConverterConfiguration.STYLESHEETS_PATH).toString() + File.separator
+		String stylesheet = EGEConstants.TEI_STYLESHEETS.toString() + File.separator
 						+ "profiles" + File.separator
 						+ profile + File.separator
 						+ Format.ODT.getId() + File.separator 

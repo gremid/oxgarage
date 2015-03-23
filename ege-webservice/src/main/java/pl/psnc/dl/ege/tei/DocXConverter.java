@@ -26,6 +26,7 @@ import net.sf.saxon.s9api.XdmNode;
 import org.tei.utils.SaxonProcFactory;
 
 import org.tei.exceptions.ConfigurationException;
+import pl.psnc.dl.ege.configuration.EGEConstants;
 
 /**
  * <p>
@@ -61,7 +62,7 @@ public class DocXConverter extends ComplexConverter {
 		File newStyles = new File (tempDirectoryName + File.separator + "word" + File.separator + "newstyles.xml");
 		Processor proc = SaxonProcFactory.getProcessor();
 		XsltCompiler comp = proc.newXsltCompiler();
-		String stylesheet = new File(ConverterConfiguration.STYLESHEETS_PATH).toString() + File.separator   + "docx" + File.separator + "tools" + File.separator   + "fixstyle.xsl";
+		String stylesheet = EGEConstants.TEI_STYLESHEETS.toString() + File.separator   + "docx" + File.separator + "tools" + File.separator   + "fixstyle.xsl";
 		XsltExecutable exec = comp.compile(new StreamSource(stylesheet));
 		XsltTransformer transformer = exec.load();
 		DocumentBuilder documentBuilder = proc.newDocumentBuilder();
@@ -87,7 +88,7 @@ public class DocXConverter extends ComplexConverter {
 		File newDotrels = new File (tempDirectoryName + File.separator + "_rels" + File.separator + "newdotrels");
 		Processor proc = SaxonProcFactory.getProcessor();
 		XsltCompiler comp = proc.newXsltCompiler();
-		String stylesheet = new File(ConverterConfiguration.STYLESHEETS_PATH).toString() + File.separator   + "docx" + File.separator + "tools" + File.separator   + "fixdotrels.xsl";
+		String stylesheet = EGEConstants.TEI_STYLESHEETS.toString() + File.separator   + "docx" + File.separator + "tools" + File.separator   + "fixdotrels.xsl";
 		XsltExecutable exec = comp.compile(new StreamSource(stylesheet));
 		XsltTransformer transformer = exec.load();
 		DocumentBuilder documentBuilder = proc.newDocumentBuilder();
@@ -144,7 +145,7 @@ public class DocXConverter extends ComplexConverter {
 	 * Returns path to the template file
 	 */
 	protected String getTemplateFile() {
-		return new File(ConverterConfiguration.STYLESHEETS_PATH).toString() + File.separator
+		return EGEConstants.TEI_STYLESHEETS.toString() + File.separator
 						+ "profiles" + File.separator
 						+ profile + File.separator
 						+ Format.DOCX.getId() + File.separator 
@@ -176,7 +177,7 @@ public class DocXConverter extends ComplexConverter {
 	 * Returns stylesheet for conversion into TEI
 	 */
 	protected StreamSource getStylesheetToTEI() {
-		String stylesheet = new File(ConverterConfiguration.STYLESHEETS_PATH).toString() + File.separator
+		String stylesheet = EGEConstants.TEI_STYLESHEETS.toString() + File.separator
 						+ "profiles" + File.separator
 						+ profile + File.separator
 						+ Format.DOCX.getId() + File.separator 
@@ -188,7 +189,7 @@ public class DocXConverter extends ComplexConverter {
 	 * Returns stylesheet for conversion from TEI
 	 */
 	protected StreamSource getStylesheetFromTEI() {
-		String stylesheet = new File(ConverterConfiguration.STYLESHEETS_PATH).toString() + File.separator
+		String stylesheet = EGEConstants.TEI_STYLESHEETS.toString() + File.separator
 						+ "profiles" + File.separator
 						+ profile + File.separator
 						+ Format.DOCX.getId() + File.separator 

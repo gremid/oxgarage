@@ -36,7 +36,7 @@ public final class LabelProvider
 	 * @return
 	 */
 	public String getLabel(String key){
-	    return getLabel(key,EGEConstants.DEFAULT_LOCALE);
+	    return getLabel(key,EGEConstants.LOCALE);
 	}
 	
 	/**

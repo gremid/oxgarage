@@ -24,12 +24,6 @@ import pl.psnc.dl.ege.types.ConversionActionArguments;
 
 public class OOConfiguration {
 
-	// path to the OpenOffice.org directory
-	public static final String PATHTOOFFICE;
-
-	// default path to the OpenOffice.org directory
-	public static final String DEFAULTPATH = "/usr/lib/openoffice/";
-
 	// list of conversion families
 	private static final List<OOConversionsFamily> ConversionFamilies;
 
@@ -43,16 +37,6 @@ public class OOConfiguration {
 		ConversionFamilies = OOConversionsFamily.getFamilies();		
 		getConversions();
 		constructExtensionsMap();
-		String CONFIG_PATH = EGEConstants.OpenOfficeConfig;
-		String pathToOffice = null;
-		try { 
-			Scanner scanner = new Scanner(new File(CONFIG_PATH));
-			pathToOffice = scanner.nextLine();			
-		} catch(FileNotFoundException e) {
-			pathToOffice = DEFAULTPATH;
-		} finally {
-			PATHTOOFFICE = pathToOffice;
-		}
 	}
 
 	public static void getConversions () {

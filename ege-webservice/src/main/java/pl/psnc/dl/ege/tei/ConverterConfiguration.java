@@ -23,8 +23,6 @@ final class ConverterConfiguration
 	
 	public static final String ZIP_MIME = "application/zip";
 	
-	public static final String STYLESHEETS_PATH;
-
 	public static final List<ConversionActionArguments> CONVERSIONS = new ArrayList<ConversionActionArguments>();
 
 	public static final String PROFILE_KEY = "pl.psnc.dl.ege.tei.profileNames";
@@ -39,9 +37,7 @@ final class ConverterConfiguration
 
 
 	static {
-		STYLESHEETS_PATH = EGEConstants.TEIROOT + "stylesheet" ;
-		File basePath = new File(STYLESHEETS_PATH +  File.separator + "profiles" + File.separator);
-
+		File basePath = new File(EGEConstants.TEI_STYLESHEETS, "profiles");
 		if (basePath.exists()) {
 			for (Format format : Format.values()) {
 				StringBuffer sbParams = new StringBuffer();
@@ -78,9 +74,9 @@ final class ConverterConfiguration
 				String[] profileDirNames = basePath.list();
 				Arrays.sort(profileDirNames);
 				List<String> profileNames = new ArrayList<String> (Arrays.asList(profileDirNames));
-				if(profileNames.contains(EGEConstants.DEFAULT_PROFILE)) {
-					profileNames.remove(EGEConstants.DEFAULT_PROFILE);
-					profileNames.add(0, EGEConstants.DEFAULT_PROFILE);
+				if(profileNames.contains(EGEConstants.TEI_PROFILE)) {
+					profileNames.remove(EGEConstants.TEI_PROFILE);
+					profileNames.add(0, EGEConstants.TEI_PROFILE);
 				}
 				for (String profileName : profileNames) {
 					File profileDir = new File(basePath + File.separator
@@ -146,9 +142,7 @@ final class ConverterConfiguration
 				|| profileName == null) {
 			return false;
 		}
-		File profile = new File(STYLESHEETS_PATH + File.separator + "profiles"
-				+ File.separator + profileName + File.separator + formatId
-				+ File.separator);
+		File profile = new File(EGEConstants.TEI_STYLESHEETS, "profiles" + File.separator + profileName + File.separator + formatId + File.separator);
 		return profile.exists();
 	}
 

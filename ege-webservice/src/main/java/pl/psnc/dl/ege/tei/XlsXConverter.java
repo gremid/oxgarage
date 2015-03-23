@@ -10,6 +10,7 @@ import net.sf.saxon.s9api.XdmAtomicValue;
 import net.sf.saxon.s9api.QName;
 
 import org.tei.exceptions.ConfigurationException;
+import pl.psnc.dl.ege.configuration.EGEConstants;
 
 /**
  * <p>
@@ -67,7 +68,7 @@ public class XlsXConverter extends ComplexConverter {
 	 * Returns stylesheet for conversion into TEI
 	 */
 	protected StreamSource getStylesheetToTEI() {
-		String stylesheet = new File(ConverterConfiguration.STYLESHEETS_PATH).toString() + File.separator
+		String stylesheet = EGEConstants.TEI_STYLESHEETS.toString() + File.separator
 						+ "profiles" + File.separator
 						+ profile + File.separator
 						+ Format.XLSX.getId() + File.separator 
@@ -84,7 +85,7 @@ public class XlsXConverter extends ComplexConverter {
 		transformer.setParameter(new QName("inputDir"), new XdmAtomicValue(tempDirectoryNameURI));
 	}
        protected StreamSource getStylesheetFromTEI() { 
-		String stylesheet = new File(ConverterConfiguration.STYLESHEETS_PATH).toString() + File.separator
+		String stylesheet = EGEConstants.TEI_STYLESHEETS.toString() + File.separator
 						+ "profiles" + File.separator
 						+ profile + File.separator
 						+ Format.XLSX.getId() + File.separator 

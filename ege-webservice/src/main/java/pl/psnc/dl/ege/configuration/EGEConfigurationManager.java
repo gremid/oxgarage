@@ -13,7 +13,6 @@ import pl.psnc.dl.ege.utils.ZipIOResolver;
 import pl.psnc.dl.ege.validator.EGEValidator;
 import uk.ac.ox.oucs.oxgarage.oo.OOConverter;
 
-import java.net.URI;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -73,25 +72,25 @@ public class EGEConfigurationManager {
         final DataType wordpressFeedDataType = new DataType("wordpress", "text/xml", "Wordpress RSS feed  of blog", EGEConstants.TEXTFAMILY);
 
         return Arrays.<Converter>asList(
-                //new NamedConverter("TEI Converter", new TEIConverter()),
+                new NamedConverter("TEI Converter", new TEIConverter()),
                 new NamedConverter("OpenOffice Converter", new OOConverter()),
-                new NamedConverter("TEI to Simple", new MultiXslConverter(URI.create("teixsl:simple/teitosimple.xsl"), new ConversionActionArguments(teiP5DataType, teiSimpleDataType, true, 11))),
-                new NamedConverter("Tite to TEI", new MultiXslConverter(URI.create("teixsl:tite/tite-to-tei.xsl"), new ConversionActionArguments(teiTiteDataType, teiP5DataType, true, 11))),
-                new NamedConverter("TEI to NLM", new MultiXslConverter(URI.create("teixsl:nlm/tei_to_nlm.xsl"), new ConversionActionArguments(teiP5DataType, nlmDataType, true, 11))),
-                new NamedConverter("ODDC to Schematron", new MultiXslConverter(URI.create("teixsl:odds/extract-sch.xsl"), new ConversionActionArguments(oddcDataType, schematronDataType, true, 11))),
-                new NamedConverter("ODDC to ISO Schematron", new MultiXslConverter(URI.create("teixsl:odds/extract-isosch.xsl"), new ConversionActionArguments(oddcDataType, isoSchematronDataType, true, 11))),
-                new NamedConverter("TEI to Docbook", new MultiXslConverter(URI.create("teixsl:docbook/teitodocbook.xsl"), new ConversionActionArguments(teiP5DataType, docbookDataType, true, 10))),
-                new NamedConverter("Docbook to TEI", new MultiXslConverter(URI.create("teixsl:docbook/docbooktotei.xsl"), new ConversionActionArguments(docbookDataType, teiP5DataType, true, 10))),
-                new NamedConverter("P4 to P5", new MultiXslConverter(URI.create("teixsl:profiles/default/p4/from.xsl"), new ConversionActionArguments(teiP4DataType, teiP5DataType, true, 10))),
-                new NamedConverter("TCP to P5", new MultiXslConverter(URI.create("teixsl:tcp/tcp2tei.xsl"), new ConversionActionArguments(tcpDataType, teiP5DataType, true, 10))),
-                new NamedConverter("ODD to Compiled ODD", new MultiXslConverter(URI.create("teixsl:odds/odd2odd.xsl"), new ConversionActionArguments(oddDataType, oddcDataType, true, 10))),
-                new NamedConverter("TEI to VerbatimXML", new MultiXslConverter(URI.create("teixsl:verbatimxml/teitoverbatim.xsl"), new ConversionActionArguments(teiP5DataType, verbatimXmlDataType, true, 11))),
-                new NamedConverter("CSV to TEI", new MultiXslConverter(URI.create("teixsl:profiles/default/csv/from.xsl"), new ConversionActionArguments(csvDataType, teiP5DataType, true, 9))),
-                new NamedConverter("TEI to CSV", new MultiXslConverter(URI.create("teixsl:profiles/default/csv/to.xsl"), new ConversionActionArguments(teiP5DataType, csvDataType, true, 11))),
-                new NamedConverter("MarkDown to TEI", new MultiXslConverter(URI.create("teixsl:profiles/default/markdown/from.xsl"), new ConversionActionArguments(markdownDataType, teiP5DataType, true, 9))),
-                new NamedConverter("TEI to MarkDown", new MultiXslConverter(URI.create("teixsl:profiles/default/markdown/to.xsl"), new ConversionActionArguments(teiP5DataType, markdownDataType, true, 11))),
-                new NamedConverter("Cocoa to TEI", new MultiXslConverter(URI.create("teixsl:profiles/default/cocoa/from.xsl"), new ConversionActionArguments(cocoaDataType, teiP5DataType, true, 9))),
-                new NamedConverter("Wordpress to TEI", new MultiXslConverter(URI.create("teixsl:profiles/default/wordpress/from.xsl"), new ConversionActionArguments(wordpressFeedDataType, teiP5DataType, true, 9)))
+                new NamedConverter("TEI to Simple", new MultiXslConverter("simple/teitosimple.xsl", new ConversionActionArguments(teiP5DataType, teiSimpleDataType, true, 11))),
+                new NamedConverter("Tite to TEI", new MultiXslConverter("tite/tite-to-tei.xsl", new ConversionActionArguments(teiTiteDataType, teiP5DataType, true, 11))),
+                new NamedConverter("TEI to NLM", new MultiXslConverter("nlm/tei_to_nlm.xsl", new ConversionActionArguments(teiP5DataType, nlmDataType, true, 11))),
+                new NamedConverter("ODDC to Schematron", new MultiXslConverter("odds/extract-sch.xsl", new ConversionActionArguments(oddcDataType, schematronDataType, true, 11))),
+                new NamedConverter("ODDC to ISO Schematron", new MultiXslConverter("odds/extract-isosch.xsl", new ConversionActionArguments(oddcDataType, isoSchematronDataType, true, 11))),
+                new NamedConverter("TEI to Docbook", new MultiXslConverter("docbook/teitodocbook.xsl", new ConversionActionArguments(teiP5DataType, docbookDataType, true, 10))),
+                new NamedConverter("Docbook to TEI", new MultiXslConverter("docbook/docbooktotei.xsl", new ConversionActionArguments(docbookDataType, teiP5DataType, true, 10))),
+                new NamedConverter("P4 to P5", new MultiXslConverter("profiles/default/p4/from.xsl", new ConversionActionArguments(teiP4DataType, teiP5DataType, true, 10))),
+                new NamedConverter("TCP to P5", new MultiXslConverter("tcp/tcp2tei.xsl", new ConversionActionArguments(tcpDataType, teiP5DataType, true, 10))),
+                new NamedConverter("ODD to Compiled ODD", new MultiXslConverter("odds/odd2odd.xsl", new ConversionActionArguments(oddDataType, oddcDataType, true, 10))),
+                new NamedConverter("TEI to VerbatimXML", new MultiXslConverter("verbatimxml/teitoverbatim.xsl", new ConversionActionArguments(teiP5DataType, verbatimXmlDataType, true, 11))),
+                new NamedConverter("CSV to TEI", new MultiXslConverter("profiles/default/csv/from.xsl", new ConversionActionArguments(csvDataType, teiP5DataType, true, 9))),
+                new NamedConverter("TEI to CSV", new MultiXslConverter("profiles/default/csv/to.xsl", new ConversionActionArguments(teiP5DataType, csvDataType, true, 11))),
+                new NamedConverter("MarkDown to TEI", new MultiXslConverter("profiles/default/markdown/from.xsl", new ConversionActionArguments(markdownDataType, teiP5DataType, true, 9))),
+                new NamedConverter("TEI to MarkDown", new MultiXslConverter("profiles/default/markdown/to.xsl", new ConversionActionArguments(teiP5DataType, markdownDataType, true, 11))),
+                new NamedConverter("Cocoa to TEI", new MultiXslConverter("profiles/default/cocoa/from.xsl", new ConversionActionArguments(cocoaDataType, teiP5DataType, true, 9))),
+                new NamedConverter("Wordpress to TEI", new MultiXslConverter("profiles/default/wordpress/from.xsl", new ConversionActionArguments(wordpressFeedDataType, teiP5DataType, true, 9)))
         );
 	}
 

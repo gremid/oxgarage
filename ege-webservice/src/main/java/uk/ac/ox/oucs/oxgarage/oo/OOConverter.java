@@ -139,7 +139,7 @@ public class OOConverter implements Converter {
 			inTmpFile.renameTo(inputFile);
 			String outputExt = OOConfiguration.getExtension(output);
 			File outputFile = new File(outTmpDir + File.separator + "result." + outputExt);
-			LOGGER.fine("OOCONVERTER: " + OOConfiguration.PATHTOOFFICE + ": Converting from: " + inputFile.getName() + " to: " + outputFile.getName());
+			LOGGER.fine("OOCONVERTER: " + EGEConstants.OPEN_OFFICE_HOME + ": Converting from: " + inputFile.getName() + " to: " + outputFile.getName());
 			int portNum = -2;
 			try {
 				synchronized (this) {
@@ -148,7 +148,7 @@ public class OOConverter implements Converter {
 					waiting--;
 					busy[portNum] = true;
 					officeManager[portNum] = new DefaultOfficeManagerConfiguration()
-							.setOfficeHome(OOConfiguration.PATHTOOFFICE)
+							.setOfficeHome(EGEConstants.OPEN_OFFICE_HOME)
 							.setPortNumber(portNumbers[portNum]).buildOfficeManager();
 					converter[portNum] = new OfficeDocumentConverter(officeManager[portNum]);
 					officeManager[portNum].start();		    			

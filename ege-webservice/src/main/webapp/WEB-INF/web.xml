@@ -4,30 +4,16 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 	<display-name>ege-webapp</display-name>
 	<servlet>
-		<description>
-			Server request for conversion operations
-		</description>
+		<description>Server request for conversion operations</description>
 		<display-name>ConversionServlet</display-name>
 		<servlet-name>ConversionServlet</servlet-name>
 		<servlet-class>pl.psnc.dl.ege.webapp.servlet.ConversionServlet</servlet-class>
-		<init-param>
-		  <param-name>oxgarageproperties</param-name>
-		  <param-value>WEB-INF/lib/oxgarage.properties</param-value>
-		</init-param>	
 	</servlet>
 	<servlet>
-		<description>
-			Serves request for validation of specified data type
-		</description>
-		<display-name>
-		ValidationServlet</display-name>
+		<description>Serves request for validation of specified data type</description>
+		<display-name>ValidationServlet</display-name>
 		<servlet-name>ValidationServlet</servlet-name>
-		<servlet-class>
-		pl.psnc.dl.ege.webapp.servlet.ValidationServlet</servlet-class>
-		<init-param>
-		  <param-name>oxgarageproperties</param-name>
-		  <param-value>WEB-INF/lib/oxgarage.properties</param-value>
-		</init-param>	
+		<servlet-class>pl.psnc.dl.ege.webapp.servlet.ValidationServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ConversionServlet</servlet-name>

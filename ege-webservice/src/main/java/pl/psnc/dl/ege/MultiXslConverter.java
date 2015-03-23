@@ -57,12 +57,6 @@ public class MultiXslConverter implements ConfigurableConverter {
 	
 	private static final String MASTER = "MASTER";
 
-	private static final String STYLESHEETS_PATH;
-
-	static {
-		STYLESHEETS_PATH = EGEConstants.TEIROOT + "stylesheet" + File.separator;
-	}
-	
 	/*
 	 * URI of resource - xsl transformation scheme.
 	 */
@@ -81,8 +75,8 @@ public class MultiXslConverter implements ConfigurableConverter {
     public MultiXslConverter() {
     }
 
-    public MultiXslConverter(URI xslUri, ConversionActionArguments conversion) {
-        this.xslUri = xslUri;
+    public MultiXslConverter(String xslPath, ConversionActionArguments conversion) {
+        this.xslUri = new File(EGEConstants.TEI_STYLESHEETS, xslPath).toURI();
         this.possibleConversions.add(conversion);
     }
 
@@ -310,7 +304,7 @@ public class MultiXslConverter implements ConfigurableConverter {
 				transformer.setInitialTemplate(new QName("main"));
 				transformer.setParameter(new QName("input-uri"), new XdmAtomicValue(inputFile.toString()));
 			}
-			transformer.setParameter(new QName("configDirectory"), new XdmAtomicValue(EGEConstants.TEIROOT));
+			transformer.setParameter(new QName("configDirectory"), new XdmAtomicValue(EGEConstants.TEI_CONFIG_DIRECTORY.map(File::getPath).orElse("")));
 			Serializer result = new Serializer();
 			result.setOutputStream(fos);
 			transformer.setDestination(result);
@@ -346,7 +340,7 @@ public class MultiXslConverter implements ConfigurableConverter {
 
 	public void configure(Map<String, String> params) throws EGEException {
 		try {
-			xslUri = new File(STYLESHEETS_PATH + File.separator +params.get("xsluri")).toURI();
+			xslUri = new File(EGEConstants.TEI_STYLESHEETS, params.get("xsluri")).toURI();
 			String iFormat = params.get("iFormat");
 			StringBuffer sb = new StringBuffer();
 			sb.append("jar:file:");

@@ -1,7 +1,7 @@
 package pl.psnc.dl.ege.configuration;
 
 import java.io.File;
-import java.util.Properties;
+import java.util.Optional;
 
 /**
  * Additional useful static data.
@@ -9,15 +9,17 @@ import java.util.Properties;
  * @author mariuszs
  */
 public final class EGEConstants {
-    private static final Properties oxgProps = new Properties();
 
-        /**
-	 * EGE temporary files directory
-	 */
-    public static final String TEIROOT = oxgProps.getProperty("TEI","/usr/share/xml/tei/");
-    public static final String OpenOfficeConfig = oxgProps.getProperty("OpenOfficeConfig","/usr/lib/libreoffice/");
-    public static final String DEFAULT_LOCALE = oxgProps.getProperty("defaultLocale","en"); 
-    public static final String DEFAULT_PROFILE = oxgProps.getProperty("defaultProfile","default"); 	
+    public static final String LOCALE = System.getProperty("oxgarage.locale", "en");
+
+    public static final File TEI_STYLESHEETS = new File(System.getProperty("oxgarage.tei.stylesheets.dir", "/usr/share/xml/tei/stylesheet"));
+
+    public static final Optional<File> TEI_CONFIG_DIRECTORY = Optional.ofNullable(System.getProperty("oxgarage.tei.config.dir")).map(File::new);
+
+    public static final String TEI_PROFILE = System.getProperty("oxgarage.tei.profile", "default");
+
+    public static final File OPEN_OFFICE_HOME = new File(System.getProperty("oxgarage.oo.home", "/usr/ib/libreoffice"));
+
 	// name for document family consisting of text documents
 	public static final String TEXTFAMILY = "Documents";
 	public static final String TEXTFAMILYCODE = "text";
