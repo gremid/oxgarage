@@ -328,7 +328,7 @@ public class ConversionServlet extends HttpServlet {
 				if(dotIndex == -1 || dotIndex == 0) fname = item.getName();	
 				else fname = item.getName().substring(0, dotIndex);				
 				// creating temporary data buffer
-				DataBuffer buffer = new DataBuffer(0, EGEConstants.BUFFER_TEMP_PATH);
+				DataBuffer buffer = new DataBuffer(0);
 				String alloc = buffer.allocate(is);
 				InputStream ins = buffer.getDataAsStream(alloc);
 				is.close();
@@ -355,7 +355,7 @@ public class ConversionServlet extends HttpServlet {
 					// do nothing
 				    }
 				}
-				File bDir = new File(buffer.getDataDir(alloc));
+				File bDir = buffer.getDataDir(alloc);
 				doConvert(response, rr, ege, cpath, ins, fname, iter, bDir);
 				buffer.clear(true);
 			    }
@@ -371,11 +371,11 @@ public class ConversionServlet extends HttpServlet {
 			    return;
 			}
 			is = new ByteArrayInputStream(inputData.getBytes());
-			DataBuffer buffer = new DataBuffer(0, EGEConstants.BUFFER_TEMP_PATH);
+			DataBuffer buffer = new DataBuffer(0);
 			String alloc = buffer.allocate(is);
 			InputStream ins = buffer.getDataAsStream(alloc);
 			is.close();
-			File bDir = new File(buffer.getDataDir(alloc));
+			File bDir = buffer.getDataDir(alloc);
 			doConvert(response, rr, ege, cpath, ins, fname, iter, bDir);
 			buffer.clear(true);
 		    }
@@ -428,13 +428,12 @@ public class ConversionServlet extends HttpServlet {
 		    }
 		} while(iter.hasNext());
 	    }
-	    zipFile = new File(EGEConstants.BUFFER_TEMP_PATH
-			       + File.separator + newTemp + EZP_EXT);
+        final File tempDir = EGEConstants.tempDir();
+        zipFile = new File(tempDir, newTemp + EZP_EXT);
 	    fos = new FileOutputStream(zipFile);
 	    ior.compressData(buffDir, fos);
 	    ins = new FileInputStream(zipFile);
-	    File szipFile = new File(EGEConstants.BUFFER_TEMP_PATH
-				     + File.separator + newTemp + ZIP_EXT);
+	    File szipFile = new File(tempDir, newTemp + ZIP_EXT);
 	    fos = new FileOutputStream(szipFile);
 	    try {
 		try {

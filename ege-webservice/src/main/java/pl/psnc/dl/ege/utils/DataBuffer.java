@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 import org.apache.commons.io.FileCleaningTracker;
 
 import pl.psnc.dl.ege.EGEImpl;
+import pl.psnc.dl.ege.configuration.EGEConstants;
 
 /**
  * Keeps collection of buffered byte data, which is used mainly by conversion
@@ -59,11 +60,6 @@ public class DataBuffer
 	private int itemMaxSize = DEFAULT_ITEM_MAX_SIZE;
 
 	/*
-	 * Directory for temporary files.
-	 */
-	private String tmpDirectory;
-
-	/*
 	 * Tracker of temporary files - which are deleted, when reference to data item is dropped.
 	 */
 	private final FileCleaningTracker tracker = new FileCleaningTracker();
@@ -71,30 +67,11 @@ public class DataBuffer
 
 	/**
 	 * Creates instance of data buffer with specified temporary files directory
-	 * - where overwhelmed data is kept. 
-	 * 
-	 * @param tmpDirectory temporary files directory
-	 */
-	public DataBuffer(String tmpDirectory)
-	{
-		this.tmpDirectory = tmpDirectory;
-		File dir = new File(tmpDirectory);
-		if (!dir.exists()) {
-			dir.mkdir();
-		}
-	}
-
-
-	/**
-	 * Creates instance of data buffer with specified temporary files directory
 	 * and threshold for every contained data item. 
 	 * 
 	 * @param itemMaxSize maximum size of data item
-	 * @param tmpDirectory temporary files directory
 	 */
-	public DataBuffer(int itemMaxSize, String tmpDirectory)
-	{
-		this(tmpDirectory);
+	public DataBuffer(int itemMaxSize) {
 		this.itemMaxSize = itemMaxSize;
 	}
 
@@ -199,7 +176,7 @@ public class DataBuffer
 	 * @param id
 	 * @return
 	 */
-	public String getDataDir(String id){
+	public File getDataDir(String id){
 		Item item = items.get(id);
 		if(item!=null){
 			return item.getDir();
@@ -247,10 +224,6 @@ public class DataBuffer
 		items = new HashMap<String,Item>();
 	}
 	
-	public String getTemporaryDir(){
-		return this.tmpDirectory;
-	}
-	
 	/*
 	 * Inner class : represents single item of data. 
 	 */
@@ -261,26 +234,22 @@ public class DataBuffer
 
 		private File tmpFile;
 
-		private String tmpDir;
+		private File tmpDir;
 		
 		private boolean commited = false;
 
 
-		public Item(String id)
-		{
-			this.tmpDir = tmpDirectory + File.separator + id;
-			File tempDir = new File(tmpDir);
-			tempDir.mkdir();
-			this.tmpFile = new File(tmpDir + File.separator + "backup.ebu");
-			os = new BufferOutputStream(itemMaxSize, tmpFile, this);
+		public Item(String id) {
+			this(id, "backup.ebu");
 		}
 		
 		public Item(String id, String itemName){
-			this.tmpDir = tmpDirectory + File.separator + id;
-			File tempDir = new File(tmpDir);
-			tempDir.mkdir();
-			this.tmpFile = new File(tmpDir + File.separator + itemName);
-			os = new BufferOutputStream(itemMaxSize, tmpFile, this);
+            this.tmpDir = new File(EGEConstants.tempDir(), id);
+            this.tmpFile = new File(tmpDir, itemName);
+            if (!tmpDir.isDirectory() && !tmpDir.mkdirs()) {
+                throw new IllegalStateException(tmpDir.toString());
+            }
+            os = new BufferOutputStream(itemMaxSize, tmpFile, this);
 		}
 		
 		public void write(InputStream is)
@@ -334,9 +303,8 @@ public class DataBuffer
 		
 		public void deleteDir(){
 			if (!os.isInMemory()) {
-				File dir = new File(tmpDir);
-				if(dir.exists()){
-					EGEIOUtils.deleteDirectory(dir);
+				if(tmpDir.exists()){
+					EGEIOUtils.deleteDirectory(tmpDir);
 				}
 			}
 		}
@@ -350,7 +318,7 @@ public class DataBuffer
 			return tmpFile;
 		}
 		
-		private String getDir(){
+		private File getDir(){
 			return tmpDir;
 		}
 

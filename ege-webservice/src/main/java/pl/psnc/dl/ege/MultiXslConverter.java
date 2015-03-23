@@ -127,8 +127,7 @@ public class MultiXslConverter implements ConfigurableConverter {
 	private File prepareTempDir() {
 		File inTempDir = null;
 		String uid = UUID.randomUUID().toString();
-		inTempDir = new File(EGEConstants.TEMP_PATH + File.separator + uid
-				+ File.separator);
+		inTempDir = new File(EGEConstants.tempDir(), uid);
 		inTempDir.mkdir();
 		return inTempDir;
 	}
@@ -242,8 +241,7 @@ public class MultiXslConverter implements ConfigurableConverter {
 		FileOutputStream fos = null;
 		try {
 			String uid = UUID.randomUUID().toString();
-			tempDir = new File(EGEConstants.TEMP_PATH + File.separator + uid
-					+ File.separator);
+			tempDir = new File(EGEConstants.tempDir(), uid);
 			tempDir.mkdir();
 			File standXml = new File(tempDir + File.separator + "stand.xml");
 			fos = new FileOutputStream(standXml);

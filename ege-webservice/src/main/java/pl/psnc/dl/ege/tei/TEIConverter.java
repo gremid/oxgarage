@@ -477,8 +477,7 @@ public class TEIConverter implements Converter,ErrorHandler {
 	private File prepareTempDir() {
 		File inTempDir = null;
 		String uid = UUID.randomUUID().toString();
-		inTempDir = new File(EGEConstants.TEMP_PATH + File.separator + uid
-				+ File.separator);
+		inTempDir = new File(EGEConstants.tempDir(), uid);
 		inTempDir.mkdir();
 		return inTempDir;
 	}
