@@ -97,7 +97,7 @@ public class ZipStreams {
                     return false;
                 }
             }
-            return true;
+            return (count == 1);
 		}
 	}
 }
